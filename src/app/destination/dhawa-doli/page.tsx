@@ -43,7 +43,9 @@ export default function DhawaDoliPage() {
       <Gallery />
       
       {/* Call to Action */}
-      <CallToAction />
+      <div className="mt-24 mb-8">
+        <CallToAction />
+      </div>
     </main>
   );
 }

@@ -19,12 +19,13 @@ export const destinationInfo = {
       link: "/destination/dhawa-doli"
     },
     {
-      id: "birding-safari",
-      location: "Desert National Park",
-      title: "Birding Safari",
-      description: "every sighting becomes a captivating story of the art of flight.",
-      image: "/assets/Images/place-3.jpeg",
-      rating: 5
+      id: "desert-national-park",
+      location: "Jaisalmer",
+      title: "Desert National Park",
+      description: "Explore the magnificence of Desert National Park, a pristine oasis amidst the Thar Desert.",
+      image: "/assets/Images/DNP/DNP-home.JPG",
+      rating: 5,
+      link: "/destination/desert-national-park"
     },
     {
       id: "wildlife-safari",

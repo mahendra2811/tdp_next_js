@@ -1,8 +1,8 @@
 import { contactInfo } from "@/constant/contactInfo";
 
-export default function CallToAction() {
+export default function TeamCallToAction() {
   return (
-    <section id="call-to-action" className="py-20 bg-gradient-to-r from-primary/90 to-primary text-white shadow-xl mt-16">
+    <section className="py-20 bg-blue-600 text-white shadow-xl mt-16">
       <div className="container max-w-5xl mx-auto px-4 text-center">
         <p className="text-sm uppercase tracking-wider mb-3 opacity-90">Call To Action</p>
         
@@ -17,7 +17,7 @@ export default function CallToAction() {
         
         <a
           href={`tel:${contactInfo.phone}`}
-          className="inline-block bg-white text-primary hover:bg-gray-100 font-medium py-4 px-10 rounded-md transition-colors text-lg shadow-md"
+          className="inline-block bg-white text-blue-600 hover:bg-gray-100 font-medium py-4 px-10 rounded-md transition-colors text-lg shadow-md"
         >
           Call Me!
         </a>

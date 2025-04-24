@@ -15,6 +15,7 @@ export default function Footer() {
           <Link href="/gallery" className="hover:text-primary">Gallery</Link>
           <Link href="/products" className="hover:text-primary">Products</Link>
           <Link href="/contact" className="hover:text-primary">Contact</Link>
+          <Link href="/team" className="hover:text-primary">Our Team</Link>
         </nav>
         <div className="text-xs">&copy; {new Date().getFullYear()} Thar Desert Photography. All rights reserved.</div>
       </div>

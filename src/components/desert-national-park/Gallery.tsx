@@ -1,12 +1,12 @@
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { dhawaDoliInfo } from '@/constant/dhawaDoliInfo';
+import { desertNationalParkInfo } from '@/constant/desertNationalParkInfo';
 
 export default function Gallery() {
   // Display images in groups of 5 for better organization
   const displayImages = (startIndex: number, count: number) => {
-    return dhawaDoliInfo.galleryImages
+    return desertNationalParkInfo.galleryImages
       .slice(startIndex, startIndex + count)
       .map((image, index) => (
         <li key={`${startIndex}-${index}`} className="gallery-item">
@@ -30,7 +30,7 @@ export default function Gallery() {
           Image Gallery
         </p>
         <h2 className="text-3xl font-bold text-center mb-8">
-          Dhawa Doli Wildlife Sanctuary through Sarvan's lens
+          Desert National Park through our lens
         </h2>
 
         {/* First set of images */}
@@ -43,25 +43,10 @@ export default function Gallery() {
           {displayImages(5, 5)}
         </ul>
 
-        {/* Third set of images */}
-        <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-8">
-          {displayImages(10, 10)}
-        </ul>
-
-        {/* Fourth set of images */}
-        <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-8">
-          {displayImages(20, 10)}
-        </ul>
-
-        {/* Fifth set of images */}
-        <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-8">
-          {displayImages(30, 17)}
-        </ul>
-
         <div className="text-center mt-20 mb-20 py-4">
           <Link href="/gallery">
             <button className="bg-primary hover:bg-primary/90 text-white font-medium py-4 px-10 rounded-md transition-colors text-lg shadow-md">
-              View more photos from Dhawa Doli Wildlife Sanctuary
+              View more photos from Desert National Park
             </button>
           </Link>
         </div>
