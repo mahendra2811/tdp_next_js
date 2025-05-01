@@ -4,12 +4,26 @@ import { useState, useEffect } from 'react';
 import { Menu, X, Phone } from 'lucide-react';
 import Image from 'next/image';
 import { contactInfo, navigationLinks, bookingInfo, brandInfo } from '@/constant/headerInfo';
+import {
+  contactInfoHindi,
+  navigationLinksHindi,
+  bookingInfoHindi,
+  brandInfoHindi,
+} from '@/constant/headerInfoHindi';
 import LanguageToggle from '@/components/common/LanguageToggle';
+import { useLanguage } from '@/context/LanguageContext';
 
 export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
+  const { language } = useLanguage();
+
+  // Get the appropriate content based on the selected language
+  const currentContactInfo = language === 'en' ? contactInfo : contactInfoHindi;
+  const currentNavigationLinks = language === 'en' ? navigationLinks : navigationLinksHindi;
+  const currentBookingInfo = language === 'en' ? bookingInfo : bookingInfoHindi;
+  const currentBrandInfo = language === 'en' ? brandInfo : brandInfoHindi;
 
   // Ensure component is mounted before rendering to avoid hydration issues
   useEffect(() => {
@@ -27,21 +41,21 @@ export default function Header() {
         <div className="container max-w-5xl mx-auto flex items-center justify-between py-2 px-4">
           {/* Helpline Box */}
           <a
-            href={`tel:${contactInfo.phone}`}
+            href={`tel:${currentContactInfo.phone}`}
             className="flex items-center gap-2 hover:opacity-90 transition-opacity"
           >
             <div className="flex items-center justify-center rounded-full bg-white/20 p-1">
               <Phone className="w-4 h-4" />
             </div>
             <div>
-              <p className="text-xs">{contactInfo.inquiryText}</p>
-              <p className="text-sm font-bold">{contactInfo.phone}</p>
+              <p className="text-xs">{currentContactInfo.inquiryText}</p>
+              <p className="text-sm font-bold">{currentContactInfo.phone}</p>
             </div>
           </a>
 
           {/* Logo for top */}
           <Link href="/" className="text-lg md:text-xl font-bold">
-            {brandInfo.name}
+            {currentBrandInfo.name}
           </Link>
 
           {/* Mobile nav button */}
@@ -62,7 +76,7 @@ export default function Header() {
         <div className="container max-w-5xl mx-auto flex items-center justify-between py-3 px-4">
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-6 text-base font-medium">
-            {navigationLinks.map((link, index) =>
+            {currentNavigationLinks.map((link, index) =>
               !link.isDropdown ? (
                 <Link
                   key={index}
@@ -105,12 +119,12 @@ export default function Header() {
           <div className="hidden md:flex items-center gap-3">
             <LanguageToggle />
             <a
-              href={bookingInfo.url}
+              href={currentBookingInfo.url}
               target="_blank"
               rel="noopener noreferrer"
               className="bg-[#2563eb] hover:bg-[#2563eb]/90 text-white px-4 py-2 rounded-md font-medium transition-colors"
             >
-              {bookingInfo.text}
+              {currentBookingInfo.text}
             </a>
           </div>
         </div>
@@ -125,7 +139,7 @@ export default function Header() {
               className="text-xl font-bold text-[#2563eb]"
               onClick={() => setMobileOpen(false)}
             >
-              <b>{brandInfo.name}</b>
+              <b>{currentBrandInfo.name}</b>
             </Link>
             <button onClick={() => setMobileOpen(false)} aria-label="Close Menu">
               <X className="w-6 h-6" />
@@ -133,7 +147,7 @@ export default function Header() {
           </div>
 
           <nav className="flex flex-col gap-4">
-            {navigationLinks.map((link, index) =>
+            {currentNavigationLinks.map((link, index) =>
               !link.isDropdown ? (
                 <Link
                   key={index}
@@ -179,13 +193,13 @@ export default function Header() {
 
             {/* Mobile Book Now Button */}
             <a
-              href={bookingInfo.url}
+              href={currentBookingInfo.url}
               target="_blank"
               rel="noopener noreferrer"
               className="mt-2 bg-[#2563eb] hover:bg-[#2563eb]/90 text-white px-4 py-2 rounded-md font-medium transition-colors text-center"
               onClick={() => setMobileOpen(false)}
             >
-              {bookingInfo.text}
+              {currentBookingInfo.text}
             </a>
           </nav>
         </div>

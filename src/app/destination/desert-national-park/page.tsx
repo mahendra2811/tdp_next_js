@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import { desertNationalParkInfo } from "@/constant/desertNationalParkInfo";
+import { desertNationalParkInfoHindi } from "@/constant/desertNationalParkInfoHindi";
 import HeroSection from "@/components/contact/HeroSection";
 import ParkInfo from "@/components/desert-national-park/ParkInfo";
 import ParkTimings from "@/components/desert-national-park/ParkTimings";
@@ -13,6 +14,7 @@ import Gallery from "@/components/desert-national-park/Gallery";
 import GoogleMap from "@/components/desert-national-park/GoogleMap";
 import CallToAction from "@/components/contact/CallToAction";
 import WhatsAppFloat from "@/components/contact/WhatsAppFloat";
+import { useLanguage } from "@/context/LanguageContext";
 
 export const metadata: Metadata = {
   title: "Desert National Park - Thar Desert Photography",
@@ -20,6 +22,8 @@ export const metadata: Metadata = {
 };
 
 export default function DesertNationalParkPage() {
+  // This is a server component, so we can't use the useLanguage hook directly
+  // The language context will be used in the client components
   return (
     <main>
       {/* WhatsApp Float Button */}
