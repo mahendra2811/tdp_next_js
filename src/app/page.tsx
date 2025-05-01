@@ -1,100 +1,107 @@
-import { homeInfo } from "@/constant/homeInfo";
-import HeroSection from "@/components/home/HeroSection";
-import AboutSection from "@/components/home/AboutSection";
-import PopularDestinations from "@/components/home/PopularDestinations";
-import PackageSection from "@/components/home/PackageSection";
-import FacebookVideo from "@/components/home/FacebookVideo";
-import GallerySection from "@/components/home/GallerySection";
-import YouTubeSection from "@/components/home/YouTubeSection";
-import HomeCallToAction from "@/components/home/HomeCallToAction";
-import WhatsAppFloat from "@/components/common/WhatsAppFloat";
+'use client';
+
+import { homeInfo } from '@/constant/homeInfo';
+import { homeInfoHindi } from '@/constant/homeInfoHindi';
+import HeroSection from '@/components/home/HeroSection';
+import AboutSection from '@/components/home/AboutSection';
+import PopularDestinations from '@/components/home/PopularDestinations';
+import PackageSection from '@/components/home/PackageSection';
+import FacebookVideo from '@/components/home/FacebookVideo';
+import GallerySection from '@/components/home/GallerySection';
+import YouTubeSection from '@/components/home/YouTubeSection';
+import HomeCallToAction from '@/components/home/HomeCallToAction';
+import WhatsAppFloat from '@/components/common/WhatsAppFloat';
+import { useLanguage } from '@/context/LanguageContext';
 
 export default function Home() {
+  const { language } = useLanguage();
+
+  // Select content based on language
+  const content = language === 'en' ? homeInfo : homeInfoHindi;
+
   return (
     <main>
       {/* WhatsApp Float Button */}
-      <WhatsAppFloat 
-        phoneNumber="919929262986" 
+      <WhatsAppFloat
+        phoneNumber="919929262986"
         message="hello%20Sharvan%20patel%20I%27m%20interested%20to%20visit%20Dhawa%20Doli%20wildlife%20santuary."
       />
 
       {/* Hero Section */}
-      <HeroSection 
-        title={homeInfo.hero.title}
-        subtitle={homeInfo.hero.subtitle}
-        backgroundImage={homeInfo.hero.backgroundImage}
-        primaryButtonText={homeInfo.hero.primaryButtonText}
-        primaryButtonLink={homeInfo.hero.primaryButtonLink}
-        secondaryButtonText={homeInfo.hero.secondaryButtonText}
-        secondaryButtonLink={homeInfo.hero.secondaryButtonLink}
+      <HeroSection
+        title={content.hero.title}
+        subtitle={content.hero.subtitle}
+        backgroundImage={content.hero.backgroundImage}
+        primaryButtonText={content.hero.primaryButtonText}
+        primaryButtonLink={content.hero.primaryButtonLink}
+        secondaryButtonText={content.hero.secondaryButtonText}
+        secondaryButtonLink={content.hero.secondaryButtonLink}
       />
 
       {/* About Section */}
-      <AboutSection 
-        subtitle={homeInfo.about.subtitle}
-        title={homeInfo.about.title}
-        content={homeInfo.about.content}
-        buttonText={homeInfo.about.buttonText}
-        buttonLink={homeInfo.about.buttonLink}
+      <AboutSection
+        subtitle={content.about.subtitle}
+        title={content.about.title}
+        content={content.about.content}
+        buttonText={content.about.buttonText}
+        buttonLink={content.about.buttonLink}
       />
 
       {/* Popular Destinations */}
-      <PopularDestinations 
-        subtitle={homeInfo.popularDestinations.subtitle}
-        title={homeInfo.popularDestinations.title}
-        description={homeInfo.popularDestinations.description}
-        destinations={homeInfo.popularDestinations.destinations}
-        buttonText={homeInfo.popularDestinations.buttonText}
-        buttonLink={homeInfo.popularDestinations.buttonLink}
+      <PopularDestinations
+        subtitle={content.popularDestinations.subtitle}
+        title={content.popularDestinations.title}
+        description={content.popularDestinations.description}
+        destinations={content.popularDestinations.destinations}
+        buttonText={content.popularDestinations.buttonText}
+        buttonLink={content.popularDestinations.buttonLink}
       />
 
       {/* Package Section */}
-      <PackageSection 
-        subtitle={homeInfo.packages.subtitle}
-        title={homeInfo.packages.title}
-        packages={homeInfo.packages.packages}
-        viewAllButtonText={homeInfo.packages.viewAllButtonText}
-        viewAllButtonLink={homeInfo.packages.viewAllButtonLink}
+      <PackageSection
+        subtitle={content.packages.subtitle}
+        title={content.packages.title}
+        packages={content.packages.packages}
+        viewAllButtonText={content.packages.viewAllButtonText}
+        viewAllButtonLink={content.packages.viewAllButtonLink}
       />
 
       {/* Facebook Video Section */}
-      <FacebookVideo 
-        videoUrl={homeInfo.facebookVideo.videoUrl}
-      />
+      <FacebookVideo videoUrl={content.facebookVideo.videoUrl} />
 
       {/* Main Gallery Section */}
-      <GallerySection 
-        subtitle={homeInfo.gallery.subtitle}
-        title={homeInfo.gallery.title}
-        description={homeInfo.gallery.description}
-        images={homeInfo.gallery.images}
-        buttonText={homeInfo.gallery.buttonText}
-        buttonLink={homeInfo.gallery.buttonLink}
+      <GallerySection
+        subtitle={content.gallery.subtitle}
+        title={content.gallery.title}
+        description={content.gallery.description}
+        images={content.gallery.images}
+        buttonText={content.gallery.buttonText}
+        buttonLink={content.gallery.buttonLink}
       />
 
       {/* Photographer Gallery Section */}
-      <GallerySection 
-        subtitle={homeInfo.photographerGallery.subtitle}
-        title={homeInfo.photographerGallery.title}
-        description={homeInfo.photographerGallery.description}
-        images={homeInfo.photographerGallery.images}
-        buttonText={homeInfo.photographerGallery.buttonText}
-        buttonLink={homeInfo.photographerGallery.buttonLink}
+      <GallerySection
+        subtitle={content.photographerGallery.subtitle}
+        title={content.photographerGallery.title}
+        description={content.photographerGallery.description}
+        images={content.photographerGallery.images}
+        buttonText={content.photographerGallery.buttonText}
+        buttonLink={content.photographerGallery.buttonLink}
       />
 
       {/* YouTube Section */}
-      <YouTubeSection 
-        title={homeInfo.youtubeSection.title}
-        embedId={homeInfo.youtubeSection.embedId}
+      <YouTubeSection
+        title={content.youtubeSection.title}
+        embedId={content.youtubeSection.embedId}
       />
 
       {/* Call to Action */}
       <HomeCallToAction
-        subtitle={homeInfo.callToAction.subtitle}
-        title={homeInfo.callToAction.title}
-        description={homeInfo.callToAction.description}
-        buttonText={homeInfo.callToAction.buttonText}
-        phoneNumber={homeInfo.callToAction.phoneNumber}
+        subtitle={content.callToAction.subtitle}
+        title={content.callToAction.title}
+        description={content.callToAction.description}
+        buttonText={content.callToAction.buttonText}
+        phoneNumber={content.callToAction.phoneNumber}
       />
     </main>
   );

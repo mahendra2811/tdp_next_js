@@ -1,14 +1,10 @@
-"use client";
-import Link from "next/link";
-import { useState, useEffect } from "react";
-import { Menu, X, Phone } from "lucide-react";
-import Image from "next/image";
-import { 
-  contactInfo, 
-  navigationLinks, 
-  bookingInfo, 
-  brandInfo 
-} from "@/constant/headerInfo";
+'use client';
+import Link from 'next/link';
+import { useState, useEffect } from 'react';
+import { Menu, X, Phone } from 'lucide-react';
+import Image from 'next/image';
+import { contactInfo, navigationLinks, bookingInfo, brandInfo } from '@/constant/headerInfo';
+import LanguageToggle from '@/components/common/LanguageToggle';
 
 export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -30,7 +26,10 @@ export default function Header() {
       <div className="bg-[#2563eb] text-white">
         <div className="container max-w-5xl mx-auto flex items-center justify-between py-2 px-4">
           {/* Helpline Box */}
-          <a href={`tel:${contactInfo.phone}`} className="flex items-center gap-2 hover:opacity-90 transition-opacity">
+          <a
+            href={`tel:${contactInfo.phone}`}
+            className="flex items-center gap-2 hover:opacity-90 transition-opacity"
+          >
             <div className="flex items-center justify-center rounded-full bg-white/20 p-1">
               <Phone className="w-4 h-4" />
             </div>
@@ -63,11 +62,11 @@ export default function Header() {
         <div className="container max-w-5xl mx-auto flex items-center justify-between py-3 px-4">
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-6 text-base font-medium">
-            {navigationLinks.map((link, index) => (
+            {navigationLinks.map((link, index) =>
               !link.isDropdown ? (
-                <Link 
-                  key={index} 
-                  href={link.url} 
+                <Link
+                  key={index}
+                  href={link.url}
                   className="hover:text-[#2563eb] transition-colors uppercase"
                 >
                   {link.name}
@@ -99,18 +98,21 @@ export default function Header() {
                   </div>
                 </div>
               )
-            ))}
+            )}
           </nav>
 
           {/* Book Now Button */}
-          <a
-            href={bookingInfo.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hidden md:block bg-[#2563eb] hover:bg-[#2563eb]/90 text-white px-4 py-2 rounded-md font-medium transition-colors"
-          >
-            {bookingInfo.text}
-          </a>
+          <div className="hidden md:flex items-center gap-3">
+            <LanguageToggle />
+            <a
+              href={bookingInfo.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-[#2563eb] hover:bg-[#2563eb]/90 text-white px-4 py-2 rounded-md font-medium transition-colors"
+            >
+              {bookingInfo.text}
+            </a>
+          </div>
         </div>
       </div>
 
@@ -118,7 +120,11 @@ export default function Header() {
       {mobileOpen && (
         <div className="md:hidden bg-white border-t border-gray-200 py-4 px-4 w-full absolute left-0 top-full shadow-lg">
           <div className="flex justify-between items-center mb-4">
-            <Link href="/" className="text-xl font-bold text-[#2563eb]" onClick={() => setMobileOpen(false)}>
+            <Link
+              href="/"
+              className="text-xl font-bold text-[#2563eb]"
+              onClick={() => setMobileOpen(false)}
+            >
               <b>{brandInfo.name}</b>
             </Link>
             <button onClick={() => setMobileOpen(false)} aria-label="Close Menu">
@@ -127,7 +133,7 @@ export default function Header() {
           </div>
 
           <nav className="flex flex-col gap-4">
-            {navigationLinks.map((link, index) => (
+            {navigationLinks.map((link, index) =>
               !link.isDropdown ? (
                 <Link
                   key={index}
@@ -144,13 +150,9 @@ export default function Header() {
                     onClick={() => setDropdownOpen(!dropdownOpen)}
                   >
                     {link.name}
-                    {dropdownOpen ? (
-                      <X className="w-4 h-4" />
-                    ) : (
-                      <Menu className="w-4 h-4" />
-                    )}
+                    {dropdownOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
                   </button>
-                  
+
                   {dropdownOpen && (
                     <ul className="pl-4 mt-2 border-l-2 border-gray-200">
                       {link.dropdownItems?.map((item, idx) => (
@@ -168,8 +170,13 @@ export default function Header() {
                   )}
                 </div>
               )
-            ))}
-            
+            )}
+
+            {/* Mobile Language Toggle */}
+            <div className="mt-2 flex justify-center">
+              <LanguageToggle className="w-full" />
+            </div>
+
             {/* Mobile Book Now Button */}
             <a
               href={bookingInfo.url}
