@@ -1,55 +1,101 @@
-import ImageGallery from "@/components/ImageGallery";
-import Link from "next/link";
+import { homeInfo } from "@/constant/homeInfo";
+import HeroSection from "@/components/home/HeroSection";
+import AboutSection from "@/components/home/AboutSection";
+import PopularDestinations from "@/components/home/PopularDestinations";
+import PackageSection from "@/components/home/PackageSection";
+import FacebookVideo from "@/components/home/FacebookVideo";
+import GallerySection from "@/components/home/GallerySection";
+import YouTubeSection from "@/components/home/YouTubeSection";
+import HomeCallToAction from "@/components/home/HomeCallToAction";
+import WhatsAppFloat from "@/components/common/WhatsAppFloat";
 
 export default function Home() {
-  // Dummy images for gallery preview
-  const galleryImages = [
-    { src: "https://thardesertphotography.com/gallery/IMG_3763.webp", alt: "Thar Desert Safari" },
-    { src: "https://thardesertphotography.com/gallery/IMG_3883.webp", alt: "Camel Ride" },
-    { src: "https://thardesertphotography.com/gallery/IMG_5307-Edit.webp", alt: "Sunset in the Desert" },
-    { src: "https://thardesertphotography.com/gallery/IMG_4762.webp", alt: "Camp Night" },
-  ];
   return (
-    <div className="">
-      {/* HERO SECTION */}
-      <section className="w-full min-h-[350px] flex flex-col justify-center items-center bg-cover bg-center rounded-xl mt-2 pb-4"
-        style={{ backgroundImage: 'url(https://thardesertphotography.com/images/hero.jpg)' }}>
-        <div className="bg-black/50 w-full h-full min-h-[350px] flex flex-col justify-center items-center rounded-xl">
-          <h1 className="text-3xl sm:text-4xl font-bold text-white mt-12 drop-shadow mb-4 text-center">Thar Desert Photography</h1>
-          <p className="text-white text-base sm:text-lg font-medium mb-6 text-center max-w-xs sm:max-w-md">Explore the magic of Rajasthan's desert through our lens. Camel safaris, camp nights, tours, and more!</p>
-          <Link href="/contact" className="bg-primary text-primary-foreground rounded px-6 py-2 font-semibold">Book Now</Link>
-        </div>
-      </section>
+    <main>
+      {/* WhatsApp Float Button */}
+      <WhatsAppFloat 
+        phoneNumber="919929262986" 
+        message="hello%20Sharvan%20patel%20I%27m%20interested%20to%20visit%20Dhawa%20Doli%20wildlife%20santuary."
+      />
 
-      {/* ABOUT PREVIEW */}
-      <section className="mt-8 text-center">
-        <h2 className="text-xl font-bold text-primary mb-1">About Us</h2>
-        <p className="text-sm text-muted-foreground max-w-md mx-auto mb-2">Paste a short about section here to introduce yourself, your story, and your mission to site visitors.</p>
-        <Link href="/about" className="text-primary font-semibold underline text-sm">Read more</Link>
-      </section>
+      {/* Hero Section */}
+      <HeroSection 
+        title={homeInfo.hero.title}
+        subtitle={homeInfo.hero.subtitle}
+        backgroundImage={homeInfo.hero.backgroundImage}
+        primaryButtonText={homeInfo.hero.primaryButtonText}
+        primaryButtonLink={homeInfo.hero.primaryButtonLink}
+        secondaryButtonText={homeInfo.hero.secondaryButtonText}
+        secondaryButtonLink={homeInfo.hero.secondaryButtonLink}
+      />
 
-      {/* GALLERY PREVIEW */}
-      <section className="mt-8">
-        <h2 className="text-xl font-bold text-primary mb-3 text-center">Gallery</h2>
-        <ImageGallery images={galleryImages} />
-        <div className="text-center mt-2">
-          <Link href="/gallery" className="text-primary font-semibold underline text-sm">See the full gallery</Link>
-        </div>
-      </section>
+      {/* About Section */}
+      <AboutSection 
+        subtitle={homeInfo.about.subtitle}
+        title={homeInfo.about.title}
+        content={homeInfo.about.content}
+        buttonText={homeInfo.about.buttonText}
+        buttonLink={homeInfo.about.buttonLink}
+      />
 
-      {/* PRODUCTS (MINI E-COMMERCE) PREVIEW */}
-      <section className="mt-8 text-center">
-        <h2 className="text-xl font-bold text-primary mb-1">Our Tours & Products</h2>
-        <p className="text-sm text-muted-foreground mb-2">Showcase your tour packages or products here. List 3-4 cards (see Products page for details).</p>
-        <Link href="/products" className="text-primary font-semibold underline text-sm">Browse packages</Link>
-      </section>
+      {/* Popular Destinations */}
+      <PopularDestinations 
+        subtitle={homeInfo.popularDestinations.subtitle}
+        title={homeInfo.popularDestinations.title}
+        description={homeInfo.popularDestinations.description}
+        destinations={homeInfo.popularDestinations.destinations}
+        buttonText={homeInfo.popularDestinations.buttonText}
+        buttonLink={homeInfo.popularDestinations.buttonLink}
+      />
 
-      {/* CONTACT PREVIEW */}
-      <section className="mt-8 text-center">
-        <h2 className="text-xl font-bold text-primary mb-1">Ready for a Desert Adventure?</h2>
-        <p className="text-sm text-muted-foreground mb-2">Invite users to contact you for bookings or custom tours.</p>
-        <Link href="/contact" className="bg-primary text-primary-foreground rounded px-8 py-2 font-semibold">Contact Us</Link>
-      </section>
-    </div>
+      {/* Package Section */}
+      <PackageSection 
+        subtitle={homeInfo.packages.subtitle}
+        title={homeInfo.packages.title}
+        packages={homeInfo.packages.packages}
+        viewAllButtonText={homeInfo.packages.viewAllButtonText}
+        viewAllButtonLink={homeInfo.packages.viewAllButtonLink}
+      />
+
+      {/* Facebook Video Section */}
+      <FacebookVideo 
+        videoUrl={homeInfo.facebookVideo.videoUrl}
+      />
+
+      {/* Main Gallery Section */}
+      <GallerySection 
+        subtitle={homeInfo.gallery.subtitle}
+        title={homeInfo.gallery.title}
+        description={homeInfo.gallery.description}
+        images={homeInfo.gallery.images}
+        buttonText={homeInfo.gallery.buttonText}
+        buttonLink={homeInfo.gallery.buttonLink}
+      />
+
+      {/* Photographer Gallery Section */}
+      <GallerySection 
+        subtitle={homeInfo.photographerGallery.subtitle}
+        title={homeInfo.photographerGallery.title}
+        description={homeInfo.photographerGallery.description}
+        images={homeInfo.photographerGallery.images}
+        buttonText={homeInfo.photographerGallery.buttonText}
+        buttonLink={homeInfo.photographerGallery.buttonLink}
+      />
+
+      {/* YouTube Section */}
+      <YouTubeSection 
+        title={homeInfo.youtubeSection.title}
+        embedId={homeInfo.youtubeSection.embedId}
+      />
+
+      {/* Call to Action */}
+      <HomeCallToAction
+        subtitle={homeInfo.callToAction.subtitle}
+        title={homeInfo.callToAction.title}
+        description={homeInfo.callToAction.description}
+        buttonText={homeInfo.callToAction.buttonText}
+        phoneNumber={homeInfo.callToAction.phoneNumber}
+      />
+    </main>
   );
 }

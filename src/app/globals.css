@@ -10,7 +10,7 @@
     --card-foreground: 240 10% 3.9%;
     --popover: 0 0% 100%;
     --popover-foreground: 240 10% 3.9%;
-    --primary: 240 5.9% 10%;
+    --primary: 214 57% 51%; /* bright-navy-blue from style guide */
     --primary-foreground: 0 0% 98%;
     --secondary: 240 4.8% 95.9%;
     --secondary-foreground: 240 5.9% 10%;
@@ -66,4 +66,42 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+/* Contact page specific styles */
+@layer components {
+  /* WhatsApp float button animation */
+  .animate-pulse {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.8;
+      transform: scale(1.05);
+    }
+  }
+
+  /* Social media embeds responsive styling */
+  .twitter-timeline-wrapper {
+    height: 400px;
+    overflow: hidden;
+  }
+
+  .instagram-media-wrapper {
+    min-height: 400px;
+    background-color: #f9f9f9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+/* Custom styles for Footer component */
+.shadow-text {
+  text-shadow: 2px 2px 0px #0c1739, -2px -2px 0px #0c1739, -2px 2px 0px #0c1739, 2px -2px 0px #0c1739;
 }

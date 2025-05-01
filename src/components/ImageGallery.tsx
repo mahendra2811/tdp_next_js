@@ -21,7 +21,13 @@ export default function ImageGallery({ images }: ImageGalleryProps) {
       <div className="grid gap-3 grid-cols-2 sm:grid-cols-3 md:grid-cols-4">
         {images.map((img, idx) => (
           <button key={idx} className="focus:outline-none" onClick={() => { setOpen(true); setActive(idx); }}>
-            <Image src={img.src} alt={img.alt} className="w-full h-32 object-cover rounded-md hover:scale-105 transition-all" />
+            <Image
+              src={img.src}
+              alt={img.alt}
+              width={300}
+              height={200}
+              className="w-full h-32 object-cover rounded-md hover:scale-105 transition-all"
+            />
           </button>
         ))}
       </div>
