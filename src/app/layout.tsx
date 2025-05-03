@@ -4,6 +4,7 @@ import './globals.css';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { LanguageProvider } from '@/context/LanguageContext';
+import { GalleryProvider } from '@/context/GalleryContext';
 import { createLanguageMetadata } from '@/utils/seo';
 
 const geistSans = Geist({
@@ -93,9 +94,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html className={`${geistSans.variable} ${geistMono.variable}`}>
       <body className="min-h-screen flex flex-col bg-background text-foreground">
         <LanguageProvider>
-          <Header />
-          <main className="flex-1 w-full max-w-8xl mx-auto py-4">{children}</main>
-          <Footer />
+          <GalleryProvider>
+            <Header />
+            <main className="flex-1 w-full max-w-8xl mx-auto py-4">{children}</main>
+            <Footer />
+          </GalleryProvider>
         </LanguageProvider>
       </body>
     </html>
