@@ -2,7 +2,7 @@
 
 import { birdsInfo } from '@/constant/birdsInfo';
 import { birdsInfoHindi } from '@/constant/birdsInfoHindi';
-import HeroSection from '@/components/contact/HeroSection';
+import HeroWithHeader from '@/components/common/HeroWithHeader';
 import BirdsInfo from '@/components/birds/BirdsInfo';
 import BirdsGallery from '@/components/birds/BirdsGallery';
 import BirdsChecklist from '@/components/birds/BirdsChecklist';
@@ -22,8 +22,8 @@ export default function BirdsPage() {
       {/* WhatsApp Float Button */}
       <WhatsAppFloat />
 
-      {/* Hero Section */}
-      <HeroSection
+      {/* Hero Section with Header */}
+      <HeroWithHeader
         title={content.title}
         subtitle={content.subtitle}
         backgroundImage={content.heroImage}

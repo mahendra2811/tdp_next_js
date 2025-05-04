@@ -2,7 +2,7 @@
 
 import { dhawaDoliInfo } from '@/constant/dhawaDoliInfo';
 import { dhawaDoliInfoHindi } from '@/constant/dhawaDoliInfoHindi';
-import HeroSection from '@/components/contact/HeroSection';
+import HeroWithHeader from '@/components/common/HeroWithHeader';
 import SanctuaryInfo from '@/components/dhawa-doli/SanctuaryInfo';
 import SocialMediaEmbed from '@/components/dhawa-doli/SocialMediaEmbed';
 import BestTimeToVisit from '@/components/dhawa-doli/BestTimeToVisit';
@@ -19,8 +19,8 @@ export default function DhawaDoliPage() {
       {/* WhatsApp Float Button */}
       <WhatsAppFloat />
 
-      {/* Hero Section */}
-      <HeroSection
+      {/* Hero Section with Header */}
+      <HeroWithHeader
         title={content.title}
         subtitle={content.subtitle}
         backgroundImage={content.heroImage}

@@ -2,7 +2,7 @@
 
 import { mammalsInfo } from '@/constant/mammalsInfo';
 import { mammalsInfoHindi } from '@/constant/mammalsInfoHindi';
-import HeroSection from '@/components/contact/HeroSection';
+import HeroWithHeader from '@/components/common/HeroWithHeader';
 import MammalsInfo from '@/components/mammals/MammalsInfo';
 import MammalsGallery from '@/components/mammals/MammalsGallery';
 import MammalsChecklist from '@/components/mammals/MammalsChecklist';
@@ -22,8 +22,8 @@ export default function MammalsPage() {
       {/* WhatsApp Float Button */}
       <WhatsAppFloat />
 
-      {/* Hero Section */}
-      <HeroSection
+      {/* Hero Section with Header */}
+      <HeroWithHeader
         title={content.title}
         subtitle={content.subtitle}
         backgroundImage={content.heroImage}

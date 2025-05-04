@@ -2,7 +2,7 @@
 
 import { homeInfo } from '@/constant/homeInfo';
 import { homeInfoHindi } from '@/constant/homeInfoHindi';
-import HeroSection from '@/components/home/HeroSection';
+import HeroWithHeader from '@/components/home/HeroWithHeader';
 import AboutSection from '@/components/home/AboutSection';
 import PopularDestinations from '@/components/home/PopularDestinations';
 import PackageSection from '@/components/home/PackageSection';
@@ -27,8 +27,8 @@ export default function Home() {
         message="hello%20Sharvan%20patel%20I%27m%20interested%20to%20visit%20Dhawa%20Doli%20wildlife%20santuary."
       />
 
-      {/* Hero Section */}
-      <HeroSection
+      {/* Hero Section with Header */}
+      <HeroWithHeader
         title={content.hero.title}
         subtitle={content.hero.subtitle}
         backgroundImage={content.hero.backgroundImage}
@@ -90,10 +90,10 @@ export default function Home() {
       />
 
       {/* YouTube Section */}
-      <YouTubeSection
+      {/* <YouTubeSection
         title={content.youtubeSection.title}
         embedId={content.youtubeSection.embedId}
-      />
+      /> */}
 
       {/* Call to Action */}
       <HomeCallToAction

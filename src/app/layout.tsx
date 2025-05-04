@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
-import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { LanguageProvider } from '@/context/LanguageContext';
 import { GalleryProvider } from '@/context/GalleryContext';
@@ -95,8 +94,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="min-h-screen flex flex-col bg-background text-foreground">
         <LanguageProvider>
           <GalleryProvider>
-            <Header />
-            <main className="flex-1 w-full max-w-8xl mx-auto py-4">{children}</main>
+            <main className="flex-1 w-full max-w-8xl mx-auto">{children}</main>
             <Footer />
           </GalleryProvider>
         </LanguageProvider>

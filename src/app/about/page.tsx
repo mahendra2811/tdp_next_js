@@ -2,7 +2,7 @@
 
 import { aboutInfo } from '@/constant/aboutInfo';
 import { aboutInfoHindi } from '@/constant/aboutInfoHindi';
-import HeroSection from '@/components/contact/HeroSection';
+import HeroWithHeader from '@/components/common/HeroWithHeader';
 import AboutSection from '@/components/about/AboutSection';
 import AboutCallToAction from '@/components/about/AboutCallToAction';
 import WhatsAppFloat from '@/components/contact/WhatsAppFloat';
@@ -19,8 +19,8 @@ export default function AboutPage() {
       {/* WhatsApp Float Button */}
       <WhatsAppFloat />
 
-      {/* Hero Section */}
-      <HeroSection
+      {/* Hero Section with Header */}
+      <HeroWithHeader
         title={content.title}
         subtitle={content.subtitle}
         backgroundImage={content.heroImage}

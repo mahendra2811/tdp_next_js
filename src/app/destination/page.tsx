@@ -2,7 +2,7 @@
 
 import { destinationInfo } from '@/constant/destinationInfo';
 import { destinationInfoHindi } from '@/constant/destinationInfoHindi';
-import HeroSection from '@/components/contact/HeroSection';
+import HeroWithHeader from '@/components/common/HeroWithHeader';
 import DestinationGrid from '@/components/destination/DestinationGrid';
 import CallToAction from '@/components/contact/CallToAction';
 import WhatsAppFloat from '@/components/contact/WhatsAppFloat';
@@ -19,8 +19,8 @@ export default function DestinationPage() {
       {/* WhatsApp Float Button */}
       <WhatsAppFloat />
 
-      {/* Hero Section */}
-      <HeroSection
+      {/* Hero Section with Header */}
+      <HeroWithHeader
         title={content.title}
         subtitle={content.subtitle}
         backgroundImage={content.heroImage}

@@ -2,7 +2,7 @@
 
 import { reptilesInfo } from '@/constant/reptilesInfo';
 import { reptilesInfoHindi } from '@/constant/reptilesInfoHindi';
-import HeroSection from '@/components/contact/HeroSection';
+import HeroWithHeader from '@/components/common/HeroWithHeader';
 import ReptilesInfo from '@/components/reptiles/ReptilesInfo';
 import ReptilesGallery from '@/components/reptiles/ReptilesGallery';
 import ReptilesChecklist from '@/components/reptiles/ReptilesChecklist';
@@ -21,8 +21,8 @@ export default function ReptilesPage() {
       {/* WhatsApp Float Button */}
       <WhatsAppFloat />
 
-      {/* Hero Section */}
-      <HeroSection
+      {/* Hero Section with Header */}
+      <HeroWithHeader
         title={content.title}
         subtitle={content.subtitle}
         backgroundImage={content.heroImage}

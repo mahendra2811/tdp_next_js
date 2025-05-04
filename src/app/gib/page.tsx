@@ -2,7 +2,7 @@
 
 import { gibInfo } from '@/constant/gibInfo';
 import { gibInfoHindi } from '@/constant/gibInfoHindi';
-import HeroSection from '@/components/contact/HeroSection';
+import HeroWithHeader from '@/components/common/HeroWithHeader';
 import Introduction from '@/components/gib/Introduction';
 import GibGallery from '@/components/gib/GibGallery';
 import ConservationPoints from '@/components/gib/ConservationPoints';
@@ -22,8 +22,8 @@ export default function GibPage() {
       {/* WhatsApp Float Button */}
       <WhatsAppFloat />
 
-      {/* Hero Section */}
-      <HeroSection
+      {/* Hero Section with Header */}
+      <HeroWithHeader
         title={content.title}
         subtitle={content.subtitle}
         backgroundImage={content.heroImage}

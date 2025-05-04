@@ -1,6 +1,10 @@
+'use client';
+
+import React from 'react';
+import Header from '@/components/layout/Header';
 import Link from 'next/link';
 
-interface HeroSectionProps {
+interface HeroWithHeaderProps {
   title: string;
   subtitle: string;
   backgroundImage: string;
@@ -10,7 +14,7 @@ interface HeroSectionProps {
   secondaryButtonLink: string;
 }
 
-export default function HeroSection({
+export default function HeroWithHeader({
   title,
   subtitle,
   backgroundImage,
@@ -18,22 +22,26 @@ export default function HeroSection({
   primaryButtonLink,
   secondaryButtonText,
   secondaryButtonLink,
-}: HeroSectionProps) {
+}: HeroWithHeaderProps) {
   return (
-    <section
-      className="w-full min-h-[500px] flex flex-col justify-center items-center bg-cover bg-center bg-fixed mt-0 relative"
+    <div
+      className="relative w-full bg-cover bg-center bg-no-repeat"
       style={{
         backgroundImage: `url(${backgroundImage})`,
-        marginTop: '-4rem', // Use rem instead of pixels for better responsiveness
-        paddingTop: '4rem', // Add padding to compensate for the negative margin
+        minHeight: '600px',
       }}
     >
-      {/* Semi-transparent overlay for the entire section */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/40 to-black/30 pointer-events-none"></div>
+      {/* Semi-transparent overlay for better text visibility */}
+      <div className="absolute inset-0 bg-black/40"></div>
 
-      {/* Content container */}
-      <div className="w-full h-full min-h-[500px] flex flex-col justify-center items-center px-4 relative z-10">
-        <h2 className="text-3xl sm:text-5xl font-bold text-white mt-12 drop-shadow mb-4 text-center">
+      {/* Header */}
+      <div className="relative z-20">
+        <Header />
+      </div>
+
+      {/* Hero Content */}
+      <div className="relative z-10 w-full h-full flex flex-col justify-center items-center px-4 pt-16 pb-12">
+        <h2 className="text-3xl sm:text-5xl font-bold text-white drop-shadow mb-4 text-center">
           {title}
         </h2>
         <p className="text-white text-xl sm:text-2xl font-medium mb-6 text-center max-w-xl">
@@ -55,6 +63,6 @@ export default function HeroSection({
           </Link>
         </div>
       </div>
-    </section>
+    </div>
   );
 }

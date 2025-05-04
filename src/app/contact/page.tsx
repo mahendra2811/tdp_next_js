@@ -1,6 +1,6 @@
 'use client';
 
-import HeroSection from '@/components/contact/HeroSection';
+import HeroWithHeader from '@/components/common/HeroWithHeader';
 import ContactForm from '@/components/contact/ContactForm';
 import ContactInfo from '@/components/contact/ContactInfo';
 import SocialProfiles from '@/components/contact/SocialProfiles';
@@ -21,8 +21,8 @@ export default function ContactPage() {
       {/* WhatsApp Float Button */}
       <WhatsAppFloat />
 
-      {/* Hero Section */}
-      <HeroSection
+      {/* Hero Section with Header */}
+      <HeroWithHeader
         title={language === 'en' ? 'Contact Me' : 'मुझसे संपर्क करें'}
         subtitle={
           language === 'en'

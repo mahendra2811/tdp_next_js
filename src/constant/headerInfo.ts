@@ -1,56 +1,60 @@
 export const contactInfo = {
-  phone: "+91 9929262986",
-  inquiryText: "For Inquires :"
+  phone: '+91 9929262986',
+  inquiryText: 'For Inquires :',
 };
 
 export const navigationLinks = [
   {
-    name: "Home",
-    url: "/"
+    name: 'Home',
+    url: '/',
   },
   {
-    name: "About Me",
-    url: "/about"
+    name: 'About Me',
+    url: '/about',
   },
   {
-    name: "Destination",
-    url: "/destination",
+    name: 'Destination',
+    url: '/destination',
     isDropdown: true,
     dropdownItems: [
       {
-        name: "Dhawa-Doli Wildlife Sanctuary",
-        url: "/destination/dhawa-doli"
+        name: 'Dhawa-Doli Wildlife Sanctuary',
+        url: '/destination/dhawa-doli',
       },
       {
-        name: "Desert National Park",
-        url: "/destination/desert-national-park"
+        name: 'Desert National Park',
+        url: '/destination/desert-national-park',
       },
       {
-        name: "Other Destinations",
-        url: "/destination"
-      }
-    ]
+        name: 'Jojari River',
+        url: '/jojari-river',
+      },
+      {
+        name: 'Other Destinations',
+        url: '/destination',
+      },
+    ],
   },
   {
-    name: "Gallery",
-    url: "/gallery"
+    name: 'Gallery',
+    url: '/gallery',
   },
   {
-    name: "Contact Me",
-    url: "/contact"
+    name: 'Contact Me',
+    url: '/contact',
   },
   {
-    name: "Our Team",
-    url: "/team"
-  }
+    name: 'Our Team',
+    url: '/team',
+  },
 ];
 
 export const bookingInfo = {
-  text: "Book Now",
-  url: "https://forms.gle/KX871rPaAT5FMqoS6"
+  text: 'Book Now',
+  url: 'https://forms.gle/KX871rPaAT5FMqoS6',
 };
 
 export const brandInfo = {
-  name: "Thar Desert Photography",
-  logo: "/assets/Images/logo-TDP.png"
+  name: 'Thar Desert Photography',
+  logo: '/assets/Images/logo-TDP.png',
 };

@@ -2,7 +2,7 @@
 
 import { desertNationalParkInfo } from '@/constant/desertNationalParkInfo';
 import { desertNationalParkInfoHindi } from '@/constant/desertNationalParkInfoHindi';
-import HeroSection from '@/components/contact/HeroSection';
+import HeroWithHeader from '@/components/common/HeroWithHeader';
 import ParkInfo from '@/components/desert-national-park/ParkInfo';
 import ParkTimings from '@/components/desert-national-park/ParkTimings';
 import HowToReach from '@/components/desert-national-park/HowToReach';
@@ -25,8 +25,8 @@ export default function DesertNationalParkPage() {
       {/* WhatsApp Float Button */}
       <WhatsAppFloat />
 
-      {/* Hero Section */}
-      <HeroSection
+      {/* Hero Section with Header */}
+      <HeroWithHeader
         title={content.title}
         subtitle={content.subtitle}
         backgroundImage={content.heroImage}
