@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
+import { trackFormSubmit, trackEvent } from '@/utils/analytics';
 
 export default function LeadForm() {
   const { language } = useLanguage();
@@ -26,12 +27,26 @@ export default function LeadForm() {
     e.preventDefault();
     setIsSubmitting(true);
 
+    // Track form submission
+    trackFormSubmit('lead_inquiry_form', {
+      has_email: !!formData.email,
+      has_phone: !!formData.phone,
+      has_message: !!formData.message,
+      language: language,
+    });
+
     // Simulate form submission
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
     // Show success message
     setIsSubmitted(true);
     setIsSubmitting(false);
+
+    // Track successful submission
+    trackEvent('lead_inquiry_completed', {
+      form_name: 'lead_inquiry_form',
+      language: language,
+    });
   };
 
   if (isSubmitted) {
