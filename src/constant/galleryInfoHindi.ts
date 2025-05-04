@@ -6,7 +6,7 @@ export const galleryInfoHindi = {
   contactButtonText: 'मेरे बारे में',
   contactButtonLink: '/about',
   bookButtonText: 'अभी बुक करें',
-  bookButtonLink: 'https://forms.gle/KX871rPaAT5FMqoS6',
+  bookButtonLink: '/book-now',
 
   sections: [
     {

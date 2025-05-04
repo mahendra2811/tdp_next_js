@@ -13,7 +13,7 @@ export default function GoogleMap() {
         <h3 className="text-2xl font-bold text-center mb-6">
           {language === 'en' ? 'Location Map' : 'स्थान मानचित्र'}
         </h3>
-        <div className="w-full h-[400px] rounded-lg overflow-hidden shadow-md">
+        <div className="w-full h-[450px] rounded-lg overflow-hidden shadow-md">
           <iframe
             src={jojariRiverInfo.googleMapEmbed}
             width="100%"

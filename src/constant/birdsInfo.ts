@@ -5,7 +5,7 @@ export const birdsInfo = {
   contactButtonText: 'About me',
   contactButtonLink: '/about',
   bookButtonText: 'Book now',
-  bookButtonLink: 'https://forms.gle/sBWPWkdsfHUVrkqD9',
+  bookButtonLink: '/book-now',
 
   introText:
     'Desert National Park in Rajasthan, India, is a unique and captivating destination for birdwatching enthusiasts. This arid and seemingly desolate landscape, covering approximately 3,162 square kilometers, offers a surprising diversity of avian life. Birding in Desert National Park can be a rewarding experience, with numerous subheadings that provide insight into this fascinating ornithological haven.',

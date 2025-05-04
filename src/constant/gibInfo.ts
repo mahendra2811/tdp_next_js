@@ -6,7 +6,7 @@ export const gibInfo = {
   aboutButtonText: 'About me',
   aboutButtonLink: '/about',
   bookButtonText: 'Book now',
-  bookButtonLink: 'https://forms.gle/sBWPWkdsfHUVrkqD9',
+  bookButtonLink: '/book-now',
   whatsappLink:
     'https://wa.me/919929262986?text=hello%20sharvan%20patel%20I%27m%20interested%20to%20visit%20Dhawa%20Doli%20wildlife%20santuary.',
 

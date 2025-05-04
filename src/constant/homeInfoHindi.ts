@@ -6,7 +6,7 @@ export const homeInfoHindi = {
     primaryButtonText: 'मेरे बारे में',
     primaryButtonLink: '/about',
     secondaryButtonText: 'अभी बुक करें',
-    secondaryButtonLink: 'https://forms.gle/KX871rPaAT5FMqoS6',
+    secondaryButtonLink: '/book-now',
   },
 
   about: {
@@ -70,7 +70,7 @@ export const homeInfoHindi = {
         rating: 5,
         link: '/destination/dhawa-doli',
         buttonText: 'यहां क्लिक करें',
-        buttonLink: 'https://forms.gle/KX871rPaAT5FMqoS6',
+        buttonLink: '/book-now',
       },
     ],
     viewAllButtonText: 'सभी पैकेज देखें',

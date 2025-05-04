@@ -34,11 +34,10 @@ export default function DestinationGrid({ destinations, moreInfoLink }: Destinat
             />
           ))}
         </div>
-        
+
         <div className="mt-12 text-center">
-          <Link 
+          <Link
             href={moreInfoLink}
-            target="_blank"
             className="bg-primary hover:bg-primary/90 text-white font-medium py-3 px-6 rounded-md transition-colors inline-block"
           >
             For more information

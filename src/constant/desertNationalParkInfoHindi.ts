@@ -6,7 +6,7 @@ export const desertNationalParkInfoHindi = {
   aboutButtonText: 'मेरे बारे में',
   aboutButtonLink: '/about',
   bookButtonText: 'अभी बुक करें',
-  bookButtonLink: 'https://forms.gle/KX871rPaAT5FMqoS6',
+  bookButtonLink: '/book-now',
   whatsappLink:
     'https://wa.me/919929262986?text=hello%20sarvan%20patel%20I%27m%20interested%20to%20visit%20Dhawa%20Doli%20wildlife%20santuary.',
 

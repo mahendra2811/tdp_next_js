@@ -5,7 +5,7 @@ export const aboutInfoHindi = {
   contactButtonText: "संपर्क करें",
   contactButtonLink: "/contact",
   bookButtonText: "अभी बुक करें",
-  bookButtonLink: "https://forms.gle/sBWPWkdsfHUVrkqD9",
+  bookButtonLink: "/book-now",
   
   sections: [
     {

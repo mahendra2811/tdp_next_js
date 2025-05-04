@@ -56,7 +56,6 @@ export default function HeroWithHeader({
           </Link>
           <Link
             href={secondaryButtonLink}
-            target="_blank"
             className="bg-white hover:bg-gray-100 text-primary rounded-md px-6 py-3 font-semibold transition-colors"
           >
             {secondaryButtonText}

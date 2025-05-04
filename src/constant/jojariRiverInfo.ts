@@ -5,7 +5,7 @@ export const jojariRiverInfo = {
   aboutButtonText: 'About me',
   aboutButtonLink: '/about',
   bookButtonText: 'Book now',
-  bookButtonLink: 'https://forms.gle/KX871rPaAT5FMqoS6',
+  bookButtonLink: '/book-now',
   whatsappLink:
     'https://wa.me/919929262986?text=hello%20sarvan%20patel%20I%27m%20interested%20to%20visit%20Jojari%20River.',
 
@@ -360,5 +360,5 @@ export const jojariRiverInfo = {
   ],
 
   googleMapEmbed:
-    'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3578.0998326873066!2d73.0092899!3d26.2689532!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39418c4eaa06ccb9%3A0x8114ea5b0ae1abb8!2sJojari%20River!5e0!3m2!1sen!2sin!4v1708155035744!5m2!1sen!2sin',
+    'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d28638.107095961168!2d73.0538093!3d26.204374249999997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39418b1b612302cf%3A0x8d4ab8bb921e370!2sJojari%20River!5e0!3m2!1sen!2sin!4v1746331679861!5m2!1sen!2sin',
 };

@@ -158,8 +158,6 @@ export default function Header() {
           <div className="flex items-center gap-3">
             <a
               href={currentBookingInfo.url}
-              target="_blank"
-              rel="noopener noreferrer"
               className="bg-[#2563eb] hover:bg-[#2563eb]/90 text-white px-4 py-2 rounded-md font-medium transition-colors"
             >
               {currentBookingInfo.text}
@@ -220,8 +218,6 @@ export default function Header() {
             {/* Mobile Book Now Button */}
             <a
               href={currentBookingInfo.url}
-              target="_blank"
-              rel="noopener noreferrer"
               className="mt-2 bg-[#2563eb] hover:bg-[#2563eb]/90 text-white px-4 py-2 rounded-md font-medium transition-colors text-center"
               onClick={toggleMobileMenu}
             >

@@ -7,7 +7,7 @@ import AboutSection from '@/components/home/AboutSection';
 import PopularDestinations from '@/components/home/PopularDestinations';
 import PackageSection from '@/components/home/PackageSection';
 import FacebookVideo from '@/components/home/FacebookVideo';
-import GallerySection from '@/components/home/GallerySection';
+import LazyGallerySection from '@/components/home/LazyGallerySection';
 import YouTubeSection from '@/components/home/YouTubeSection';
 import HomeCallToAction from '@/components/home/HomeCallToAction';
 import WhatsAppFloat from '@/components/common/WhatsAppFloat';
@@ -70,7 +70,7 @@ export default function Home() {
       <FacebookVideo videoUrl={content.facebookVideo.videoUrl} />
 
       {/* Main Gallery Section */}
-      <GallerySection
+      <LazyGallerySection
         subtitle={content.gallery.subtitle}
         title={content.gallery.title}
         description={content.gallery.description}
@@ -80,7 +80,7 @@ export default function Home() {
       />
 
       {/* Photographer Gallery Section */}
-      <GallerySection
+      <LazyGallerySection
         subtitle={content.photographerGallery.subtitle}
         title={content.photographerGallery.title}
         description={content.photographerGallery.description}

@@ -1,5 +1,5 @@
-import Image from "next/image";
-import Link from "next/link";
+import Image from 'next/image';
+import Link from 'next/link';
 
 interface PackageProps {
   title: string;
@@ -38,33 +38,49 @@ export default function PackageSection({
         <h2 className="text-2xl sm:text-3xl font-bold text-center mb-12">{title}</h2>
 
         {packages.map((pkg, index) => (
-          <div key={index} className="bg-white rounded-lg overflow-hidden shadow-lg max-w-4xl mx-auto mb-8">
+          <div
+            key={index}
+            className="bg-white rounded-lg overflow-hidden shadow-lg max-w-4xl mx-auto mb-8"
+          >
             <div className="relative h-80 w-full">
-              <Image 
-                src={pkg.image} 
-                alt={pkg.title} 
-                fill
-                className="object-cover"
-              />
+              <Image src={pkg.image} alt={pkg.title} fill className="object-cover" />
             </div>
             <div className="p-6">
               <Link href={pkg.link}>
-                <h3 className="text-2xl font-bold mb-4 hover:text-primary transition-colors">{pkg.title}</h3>
+                <h3 className="text-2xl font-bold mb-4 hover:text-primary transition-colors">
+                  {pkg.title}
+                </h3>
               </Link>
-              <p className="text-gray-700 mb-6">
-                {pkg.description}
-              </p>
+              <p className="text-gray-700 mb-6">{pkg.description}</p>
 
               <div className="flex flex-wrap gap-6 mb-6">
                 <div className="flex items-center">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-primary mr-2" viewBox="0 0 20 20" fill="currentColor">
-                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd" />
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-5 w-5 text-primary mr-2"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
+                      clipRule="evenodd"
+                    />
                   </svg>
                   <p>{pkg.duration}</p>
                 </div>
                 <div className="flex items-center">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-primary mr-2" viewBox="0 0 20 20" fill="currentColor">
-                    <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9z" clipRule="evenodd" />
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-5 w-5 text-primary mr-2"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9z"
+                      clipRule="evenodd"
+                    />
                   </svg>
                   <Link href={pkg.link}>
                     <p className="hover:text-primary transition-colors">{pkg.location}</p>
@@ -78,12 +94,12 @@ export default function PackageSection({
                     <p className="text-sm text-gray-500">({pkg.reviews} reviews)</p>
                     <div className="flex text-yellow-500">
                       {[...Array(5)].map((_, i) => (
-                        <svg 
+                        <svg
                           key={i}
-                          xmlns="http://www.w3.org/2000/svg" 
-                          className="h-5 w-5" 
-                          viewBox="0 0 20 20" 
-                          fill={i < pkg.rating ? "currentColor" : "none"}
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="h-5 w-5"
+                          viewBox="0 0 20 20"
+                          fill={i < pkg.rating ? 'currentColor' : 'none'}
                           stroke="currentColor"
                           strokeWidth={i < pkg.rating ? 0 : 1}
                         >
@@ -93,12 +109,18 @@ export default function PackageSection({
                     </div>
                   </div>
                   <div>
-                    <p className="text-3xl font-bold text-primary">{pkg.price} <span className="text-sm font-normal text-gray-500">{pkg.priceUnit}</span></p>
+                    <p className="text-3xl font-bold text-primary">
+                      {pkg.price}{' '}
+                      <span className="text-sm font-normal text-gray-500">{pkg.priceUnit}</span>
+                    </p>
                   </div>
                 </div>
                 <p className="text-center mb-4">Want to know more about trip</p>
                 <div className="text-center">
-                  <Link href={pkg.buttonLink} target="_blank" className="bg-primary hover:bg-primary/90 text-white rounded-md px-6 py-3 font-semibold transition-colors inline-block">
+                  <Link
+                    href={pkg.buttonLink}
+                    className="bg-primary hover:bg-primary/90 text-white rounded-md px-6 py-3 font-semibold transition-colors inline-block"
+                  >
                     {pkg.buttonText}
                   </Link>
                 </div>
@@ -108,7 +130,10 @@ export default function PackageSection({
         ))}
 
         <div className="text-center mt-10">
-          <Link href={viewAllButtonLink} className="bg-primary hover:bg-primary/90 text-white rounded-md px-6 py-3 font-semibold transition-colors">
+          <Link
+            href={viewAllButtonLink}
+            className="bg-primary hover:bg-primary/90 text-white rounded-md px-6 py-3 font-semibold transition-colors"
+          >
             {viewAllButtonText}
           </Link>
         </div>

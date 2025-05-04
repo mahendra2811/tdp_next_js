@@ -51,7 +51,7 @@ export const navigationLinksHindi = [
 
 export const bookingInfoHindi = {
   text: 'अभी बुक करें',
-  url: 'https://forms.gle/KX871rPaAT5FMqoS6',
+  url: '/book-now',
 };
 
 export const brandInfoHindi = {

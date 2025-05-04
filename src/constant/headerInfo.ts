@@ -51,7 +51,7 @@ export const navigationLinks = [
 
 export const bookingInfo = {
   text: 'Book Now',
-  url: 'https://forms.gle/KX871rPaAT5FMqoS6',
+  url: '/book-now',
 };
 
 export const brandInfo = {

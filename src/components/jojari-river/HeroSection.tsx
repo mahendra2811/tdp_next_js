@@ -40,13 +40,13 @@ export default function HeroSection() {
                 </button>
               </Link>
 
-              <Link href={info.bookButtonLink} target="_blank">
+              <Link href={info.bookButtonLink}>
                 <button className="bg-primary hover:bg-primary/90 text-white px-6 py-3 rounded-md font-medium transition-colors">
                   {info.bookButtonText}
                 </button>
               </Link>
 
-              <Link href={info.whatsappLink} target="_blank">
+              <Link href={info.whatsappLink}>
                 <button className="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-md font-medium transition-colors flex items-center gap-2">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"

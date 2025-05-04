@@ -6,7 +6,7 @@ export const galleryInfo = {
   contactButtonText: 'About me',
   contactButtonLink: '/about',
   bookButtonText: 'Book now',
-  bookButtonLink: 'https://forms.gle/KX871rPaAT5FMqoS6',
+  bookButtonLink: '/book-now',
 
   sections: [
     {
