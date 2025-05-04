@@ -1,68 +1,101 @@
 "use client";
-import { useEffect, useState } from 'react';
-import { galleryInfo } from "@/constant/galleryInfo";
-import Image from 'next/image';
+import React from 'react';
+import GalleryImage from '@/components/common/GalleryImage';
+import ImageGallery from '@/components/ImageGallery';
+import { GalleryImage as GalleryImageType } from '@/components/common/ImageModal';
 
 export default function ImageDebugPage() {
-  return (
-    <main className="container mx-auto p-8">
-      <h1 className="text-3xl font-bold mb-6">Image Debug Page</h1>
-      
-      <div className="mb-8">
-        <h2 className="text-2xl font-semibold mb-4">Hero Image</h2>
-        <div className="p-4 border rounded mb-2">
-          <p className="font-mono text-sm mb-2">{galleryInfo.heroImage}</p>
-          <div className="relative h-40 w-full">
-            <Image 
-              src={galleryInfo.heroImage} 
-              alt="Hero"
-              fill
-              className="object-cover"
-              onError={(e) => {
-                const target = e.target as HTMLImageElement;
-                target.style.backgroundColor = 'red';
-                target.style.opacity = '0.3';
-              }}
-            />
-          </div>
-        </div>
-      </div>
-      
-      {galleryInfo.sections.map((section) => (
-        <div key={section.id} className="mb-8">
-          <h2 className="text-2xl font-semibold mb-4">{section.title}</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {section.images.map((image, index) => (
-              <div key={index} className="p-4 border rounded">
-                <p className="font-mono text-sm mb-2">{image.src}</p>
-                <div className="relative h-40 w-full">
-                  <Image 
-                    src={image.src} 
-                    alt={image.alt}
-                    fill
-                    className="object-cover"
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.style.backgroundColor = 'red';
-                      target.style.opacity = '0.3';
-                    }}
-                  />
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      ))}
+  // Sample gallery images
+  const galleryImages: GalleryImageType[] = [
+    {
+      src: '/assets/Images/gallery/gallery-33.JPG',
+      alt: 'Gallery image 33',
+    },
+    {
+      src: '/assets/Images/gallery/gallery-34.JPG',
+      alt: 'Gallery image 34',
+    },
+    {
+      src: '/assets/Images/gallery/gallery-37.JPG',
+      alt: 'Gallery image 37',
+    },
+    {
+      src: '/assets/Images/gallery/gallery-39.JPG',
+      alt: 'Gallery image 39',
+    },
+  ];
 
-      <div className="mt-8 p-4 bg-yellow-100 rounded">
-        <h3 className="font-bold mb-2">Debugging Notes:</h3>
-        <ul className="list-disc pl-5">
-          <li>Red backgrounds indicate images that failed to load</li>
-          <li>Check for case sensitivity issues (.jpg vs .JPG)</li>
-          <li>Check for path issues (other- vs others-)</li>
-          <li>Check if the file exists in the correct directory</li>
-        </ul>
-      </div>
-    </main>
+  // Sample non-gallery images (hero, banner, etc.)
+  const nonGalleryImages = [
+    {
+      src: '/assets/Images/hero-banner-1.jpg',
+      alt: 'Hero banner',
+    },
+    {
+      src: '/assets/Images/Home/Banner.jpg',
+      alt: 'Home banner',
+    },
+  ];
+
+  return (
+    <div className="container mx-auto px-4 py-8">
+      <h1 className="text-3xl font-bold mb-8">Image Gallery Debug</h1>
+      
+      <section className="mb-12">
+        <h2 className="text-2xl font-semibold mb-4">Individual Gallery Images (should open in modal)</h2>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          {galleryImages.map((image, index) => (
+            <div key={index} className="aspect-square relative">
+              <GalleryImage
+                src={image.src}
+                alt={image.alt}
+                fill
+                className="object-cover rounded-lg"
+                sizes="(max-width: 768px) 50vw, 25vw"
+              />
+            </div>
+          ))}
+        </div>
+      </section>
+      
+      <section className="mb-12">
+        <h2 className="text-2xl font-semibold mb-4">Non-Gallery Images (should not open in modal)</h2>
+        <div className="grid grid-cols-2 gap-4">
+          {nonGalleryImages.map((image, index) => (
+            <div key={index} className="aspect-video relative">
+              <GalleryImage
+                src={image.src}
+                alt={image.alt}
+                fill
+                className="object-cover rounded-lg"
+                sizes="(max-width: 768px) 100vw, 50vw"
+              />
+            </div>
+          ))}
+        </div>
+      </section>
+      
+      <section className="mb-12">
+        <h2 className="text-2xl font-semibold mb-4">Force Gallery on Non-Gallery Image</h2>
+        <div className="aspect-video relative w-full max-w-md mx-auto">
+          <GalleryImage
+            src={nonGalleryImages[0].src}
+            alt={nonGalleryImages[0].alt}
+            fill
+            className="object-cover rounded-lg"
+            sizes="(max-width: 768px) 100vw, 50vw"
+            forceGallery={true}
+          />
+          <p className="mt-2 text-center text-sm text-gray-500">
+            This hero image is forced to open in gallery mode
+          </p>
+        </div>
+      </section>
+      
+      <section>
+        <h2 className="text-2xl font-semibold mb-4">ImageGallery Component Test</h2>
+        <ImageGallery images={galleryImages} />
+      </section>
+    </div>
   );
 }

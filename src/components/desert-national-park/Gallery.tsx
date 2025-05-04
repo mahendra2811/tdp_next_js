@@ -1,36 +1,42 @@
+'use client';
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { desertNationalParkInfo } from '@/constant/desertNationalParkInfo';
+import { desertNationalParkInfoHindi } from '@/constant/desertNationalParkInfoHindi';
+import { useLanguage } from '@/context/LanguageContext';
 
 export default function Gallery() {
+  const { language } = useLanguage();
+  const info = language === 'en' ? desertNationalParkInfo : desertNationalParkInfoHindi;
+
   // Display images in groups of 5 for better organization
   const displayImages = (startIndex: number, count: number) => {
-    return desertNationalParkInfo.galleryImages
-      .slice(startIndex, startIndex + count)
-      .map((image, index) => (
-        <li key={`${startIndex}-${index}`} className="gallery-item">
-          <figure className="relative h-64 w-full overflow-hidden rounded-lg shadow-md transition-transform duration-300 hover:scale-105">
-            <Image
-              src={image.src}
-              alt={image.alt}
-              fill
-              className="object-cover"
-              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-            />
-          </figure>
-        </li>
-      ));
+    return info.galleryImages.slice(startIndex, startIndex + count).map((image, index) => (
+      <li key={`${startIndex}-${index}`} className="gallery-item">
+        <figure className="relative h-64 w-full overflow-hidden rounded-lg shadow-md transition-transform duration-300 hover:scale-105">
+          <Image
+            src={image.src}
+            alt={image.alt}
+            fill
+            className="object-cover"
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          />
+        </figure>
+      </li>
+    ));
   };
 
   return (
     <section className="py-12 bg-white">
       <div className="container max-w-5xl mx-auto px-4">
         <p className="text-sm uppercase tracking-wider text-center text-gray-500 mb-2">
-          Image Gallery
+          {language === 'en' ? 'Image Gallery' : 'छवि गैलरी'}
         </p>
         <h2 className="text-3xl font-bold text-center mb-8">
-          Desert National Park through our lens
+          {language === 'en'
+            ? 'Desert National Park through our lens'
+            : 'रेगिस्तान राष्ट्रीय उद्यान हमारे लेंस के माध्यम से'}
         </h2>
 
         {/* First set of images */}
@@ -46,7 +52,9 @@ export default function Gallery() {
         <div className="text-center mt-20 mb-20 py-4">
           <Link href="/gallery">
             <button className="bg-primary hover:bg-primary/90 text-white font-medium py-4 px-10 rounded-md transition-colors text-lg shadow-md">
-              View more photos from Desert National Park
+              {language === 'en'
+                ? 'View more photos from Desert National Park'
+                : 'रेगिस्तान राष्ट्रीय उद्यान से और अधिक तस्वीरें देखें'}
             </button>
           </Link>
         </div>

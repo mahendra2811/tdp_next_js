@@ -5,34 +5,91 @@ export const birdsInfo = {
   contactButtonText: 'About me',
   contactButtonLink: '/about',
   bookButtonText: 'Book now',
-  bookButtonLink: 'https://forms.gle/sBWPWkdsfHUVrkqD9',
+  bookButtonLink: '/book-now',
 
   introText:
     'Desert National Park in Rajasthan, India, is a unique and captivating destination for birdwatching enthusiasts. This arid and seemingly desolate landscape, covering approximately 3,162 square kilometers, offers a surprising diversity of avian life. Birding in Desert National Park can be a rewarding experience, with numerous subheadings that provide insight into this fascinating ornithological haven.',
 
   galleryImages1: [
-    { src: '/assets/Images/birds/birds-1.JPG', alt: 'Bird image 1' },
-    { src: '/assets/Images/birds/birds-2.jpg', alt: 'Bird image 2' },
-    { src: '/assets/Images/birds/birds-3.jpeg', alt: 'Bird image 3' },
-    { src: '/assets/Images/birds/birds-4.jpg', alt: 'Bird image 4' },
-    { src: '/assets/Images/birds/birds-5.jpg', alt: 'Bird image 5' },
+    {
+      src: '/assets/Images/birds/birds-1.JPG',
+      alt: 'Great Indian Bustard in its natural habitat at Desert National Park, showcasing its distinctive plumage and tall stature against the arid landscape',
+    },
+    {
+      src: '/assets/Images/birds/birds-2.jpg',
+      alt: 'Demoiselle Crane in flight over Desert National Park, displaying its elegant wingspan and graceful silhouette against the sky',
+    },
+    {
+      src: '/assets/Images/birds/birds-3.jpeg',
+      alt: 'Indian Courser with its characteristic running posture on the sandy terrain of Desert National Park, highlighting its cryptic coloration',
+    },
+    {
+      src: '/assets/Images/birds/birds-4.jpg',
+      alt: 'Desert Wheatear perched on a thorny bush, showing its distinctive black and tan plumage adapted to the arid environment',
+    },
+    {
+      src: '/assets/Images/birds/birds-5.jpg',
+      alt: 'Pair of Sandgrouse camouflaged against the desert floor, demonstrating their remarkable adaptation to the harsh desert conditions',
+    },
   ],
 
   galleryImages2: [
-    { src: '/assets/Images/birds/birds-6.JPG', alt: 'Bird image 6' },
-    { src: '/assets/Images/birds/birds-7.JPG', alt: 'Bird image 7' },
-    { src: '/assets/Images/birds/birds-8.JPG', alt: 'Bird image 8' },
-    { src: '/assets/Images/birds/birds-9.JPG', alt: 'Bird image 9' },
-    { src: '/assets/Images/birds/birds-10.jpg', alt: 'Bird image 10' },
-    { src: '/assets/Images/birds/birds-11.jpg', alt: 'Bird image 11' },
-    { src: '/assets/Images/birds/birds-12.jpg', alt: 'Bird image 12' },
-    { src: '/assets/Images/birds/birds-13.jpg', alt: 'Bird image 13' },
-    { src: '/assets/Images/birds/birds-14.jpeg', alt: 'Bird image 14' },
-    { src: '/assets/Images/birds/birds-16.jpeg', alt: 'Bird image 16' },
-    { src: '/assets/Images/birds/birds-17.jpg', alt: 'Bird image 17' },
-    { src: '/assets/Images/birds/birds-18.jpg', alt: 'Bird image 18' },
-    { src: '/assets/Images/birds/birds-19.jpg', alt: 'Bird image 19' },
-    { src: '/assets/Images/birds/birds-20.jpg', alt: 'Bird image 20' },
+    {
+      src: '/assets/Images/birds/birds-6.JPG',
+      alt: 'Short-toed Eagle scanning for prey from a high perch, displaying its powerful talons and keen eyesight essential for hunting in the desert',
+    },
+    {
+      src: '/assets/Images/birds/birds-7.JPG',
+      alt: 'Indian Peafowl with its magnificent train of feathers spread in a courtship display against the backdrop of desert vegetation',
+    },
+    {
+      src: '/assets/Images/birds/birds-8.JPG',
+      alt: 'Rufous-tailed Lark singing from an elevated perch, its melodious call echoing across the desert landscape at dawn',
+    },
+    {
+      src: '/assets/Images/birds/birds-9.JPG',
+      alt: 'Desert Lark foraging among the sparse vegetation, showcasing its sandy-colored plumage that provides perfect camouflage',
+    },
+    {
+      src: '/assets/Images/birds/birds-10.jpg',
+      alt: 'Egyptian Vulture soaring on thermal currents above Desert National Park, its distinctive white plumage contrasting against the blue sky',
+    },
+    {
+      src: '/assets/Images/birds/birds-11.jpg',
+      alt: 'Pair of Red-headed Vultures perched on a dead tree, their critically endangered status making this sighting particularly valuable',
+    },
+    {
+      src: '/assets/Images/birds/birds-12.jpg',
+      alt: 'Laggar Falcon in hunting posture, demonstrating the fierce predatory nature that makes it a top avian hunter in the desert ecosystem',
+    },
+    {
+      src: '/assets/Images/birds/birds-13.jpg',
+      alt: 'Common Kestrel hovering mid-air while scanning the ground for small prey, showcasing its remarkable ability to remain stationary in flight',
+    },
+    {
+      src: '/assets/Images/birds/birds-14.jpeg',
+      alt: 'Bluethroat with its distinctive blue throat patch, perched among reeds near a desert water body during winter migration',
+    },
+    {
+      src: '/assets/Images/birds/birds-16.jpeg',
+      alt: "Sykes's Nightjar camouflaged against the desert floor, its cryptic plumage making it nearly invisible during daytime rest",
+    },
+    {
+      src: '/assets/Images/birds/birds-17.jpg',
+      alt: 'Greater Hoopoe Lark performing its spectacular aerial display, a behavior characteristic of breeding season in the desert',
+    },
+    {
+      src: '/assets/Images/birds/birds-18.jpg',
+      alt: 'Pallid Harrier gliding low over the desert grasslands during winter migration, searching for small mammals and reptiles',
+    },
+    {
+      src: '/assets/Images/birds/birds-19.jpg',
+      alt: 'Flock of Demoiselle Cranes gathered at a desert waterhole at sunset, showcasing their social behavior during migration',
+    },
+    {
+      src: '/assets/Images/birds/birds-20.jpg',
+      alt: "Macqueen's Bustard in its distinctive display posture, its rarity in the region making it a prized sighting for birdwatchers",
+    },
   ],
 
   infoSections: [
