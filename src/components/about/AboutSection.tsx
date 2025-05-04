@@ -1,7 +1,15 @@
 import { aboutInfo } from '@/constant/aboutInfo';
+import { aboutInfoHindi } from '@/constant/aboutInfoHindi';
+import { useLanguage } from '@/context/LanguageContext';
 import Image from 'next/image';
 
 export default function AboutSection() {
+  const { language } = useLanguage();
+
+  // Select content based on language
+  const content = language === 'en' ? aboutInfo : aboutInfoHindi;
+
+  console.log('AboutSection language:', language); // Debug log
   // Function to return descriptive alt text for about page images
   const getAboutImageAlt = (index: number): string => {
     const altTexts = [
@@ -25,18 +33,18 @@ export default function AboutSection() {
     <section className="py-16 bg-white">
       <div className="container max-w-5xl mx-auto px-4">
         <p className="text-sm uppercase tracking-wider text-primary text-center mb-2">
-          {aboutInfo.sections[0].subtitle}
+          {content.sections[0].subtitle}
         </p>
 
-        <h2 className="text-3xl font-bold text-center mb-4">{aboutInfo.sections[0].title}</h2>
+        <h2 className="text-3xl font-bold text-center mb-4">{content.sections[0].title}</h2>
 
         <p className="text-lg text-center max-w-3xl mx-auto mb-12">
-          {aboutInfo.sections[0].description}
+          {content.sections[0].description}
         </p>
 
         {/* Biography Sections */}
         <div className="space-y-8">
-          {aboutInfo.biography.map((section, index) => (
+          {content.biography.map((section, index) => (
             <div key={index} className="mb-6">
               <h3 className="text-xl font-semibold mb-2">{section.title}:</h3>
               <p className="text-gray-700 leading-relaxed">{section.content}</p>
@@ -47,7 +55,7 @@ export default function AboutSection() {
         {/* First Gallery */}
         <div className="mt-12">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-            {aboutInfo.photoGalleries[0].images.map((image, index) => (
+            {content.photoGalleries[0].images.map((image, index) => (
               <div
                 key={index}
                 className="aspect-square relative overflow-hidden rounded-lg shadow-md"
@@ -67,7 +75,7 @@ export default function AboutSection() {
         {/* Second Gallery */}
         <div className="mt-12">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-            {aboutInfo.photoGalleries[1].images.map((image, index) => (
+            {content.photoGalleries[1].images.map((image, index) => (
               <div
                 key={index}
                 className="aspect-square relative overflow-hidden rounded-lg shadow-md"
@@ -86,8 +94,8 @@ export default function AboutSection() {
 
         {/* Conclusion */}
         <div className="mt-16">
-          <h2 className="text-2xl font-bold mb-4">{aboutInfo.conclusion.title}</h2>
-          <p className="text-gray-700 leading-relaxed">{aboutInfo.conclusion.content}</p>
+          <h2 className="text-2xl font-bold mb-4">{content.conclusion.title}</h2>
+          <p className="text-gray-700 leading-relaxed">{content.conclusion.content}</p>
         </div>
       </div>
     </section>

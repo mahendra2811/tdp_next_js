@@ -91,6 +91,8 @@ export const metadata = createLanguageMetadata({
 });
 
 import { Suspense } from 'react';
+import ClientBody from './ClientBody';
+import JoinTeamPopup from '@/components/common/JoinTeamPopup';
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -112,27 +114,30 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         `}
       </Script>
       {/* End Google Tag Manager */}
-      <body className="min-h-screen flex flex-col bg-background text-foreground">
-        {/* Google Tag Manager (noscript) */}
-        <noscript>
-          <iframe
-            src="https://www.googletagmanager.com/ns.html?id=GTM-WXBP85DC"
-            height="0"
-            width="0"
-            style={{ display: 'none', visibility: 'hidden' }}
-          ></iframe>
-        </noscript>
-        {/* End Google Tag Manager (noscript) */}
-        <Suspense fallback={null}>
-          <PageViewTracker />
-        </Suspense>
-        <LanguageProvider>
-          <GalleryProvider>
-            <main className="flex-1 w-full max-w-8xl mx-auto">{children}</main>
-            <Footer />
-          </GalleryProvider>
-        </LanguageProvider>
-      </body>
+      <ClientBody>
+        <div className="min-h-screen flex flex-col bg-background text-foreground">
+          {/* Google Tag Manager (noscript) */}
+          <noscript>
+            <iframe
+              src="https://www.googletagmanager.com/ns.html?id=GTM-WXBP85DC"
+              height="0"
+              width="0"
+              style={{ display: 'none', visibility: 'hidden' }}
+            ></iframe>
+          </noscript>
+          {/* End Google Tag Manager (noscript) */}
+          <Suspense fallback={null}>
+            <PageViewTracker />
+          </Suspense>
+          <LanguageProvider>
+            <GalleryProvider>
+              <main className="flex-1 w-full max-w-8xl mx-auto">{children}</main>
+              <Footer />
+              <JoinTeamPopup />
+            </GalleryProvider>
+          </LanguageProvider>
+        </div>
+      </ClientBody>
     </html>
   );
 }

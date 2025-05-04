@@ -5,7 +5,7 @@ import { aboutInfoHindi } from '@/constant/aboutInfoHindi';
 import HeroWithHeader from '@/components/common/HeroWithHeader';
 import AboutSection from '@/components/about/AboutSection';
 import AboutCallToAction from '@/components/about/AboutCallToAction';
-import WhatsAppFloat from '@/components/contact/WhatsAppFloat';
+// JoinTeamButton is now included in ClientBody
 import { useLanguage } from '@/context/LanguageContext';
 
 export default function AboutPage() {
@@ -16,8 +16,7 @@ export default function AboutPage() {
 
   return (
     <main>
-      {/* WhatsApp Float Button */}
-      <WhatsAppFloat />
+      {/* Join Team Button is now included in ClientBody */}
 
       {/* Hero Section with Header */}
       <HeroWithHeader

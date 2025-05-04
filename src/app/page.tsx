@@ -10,7 +10,7 @@ import FacebookVideo from '@/components/home/FacebookVideo';
 import LazyGallerySection from '@/components/home/LazyGallerySection';
 import YouTubeSection from '@/components/home/YouTubeSection';
 import HomeCallToAction from '@/components/home/HomeCallToAction';
-import WhatsAppFloat from '@/components/common/WhatsAppFloat';
+// JoinTeamButton is now included in ClientBody
 import { useLanguage } from '@/context/LanguageContext';
 
 export default function Home() {
@@ -21,11 +21,7 @@ export default function Home() {
 
   return (
     <main>
-      {/* WhatsApp Float Button */}
-      <WhatsAppFloat
-        phoneNumber="919929262986"
-        message="hello%20Sharvan%20patel%20I%27m%20interested%20to%20visit%20Dhawa%20Doli%20wildlife%20santuary."
-      />
+      {/* Join Team Button is now included in ClientBody */}
 
       {/* Hero Section with Header */}
       <HeroWithHeader
