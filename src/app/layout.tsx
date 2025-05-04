@@ -90,6 +90,8 @@ export const metadata = createLanguageMetadata({
   },
 });
 
+import { Suspense } from 'react';
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html className={`${geistSans.variable} ${geistMono.variable}`}>
@@ -121,7 +123,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           ></iframe>
         </noscript>
         {/* End Google Tag Manager (noscript) */}
-        <PageViewTracker />
+        <Suspense fallback={null}>
+          <PageViewTracker />
+        </Suspense>
         <LanguageProvider>
           <GalleryProvider>
             <main className="flex-1 w-full max-w-8xl mx-auto">{children}</main>
