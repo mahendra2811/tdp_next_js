@@ -206,7 +206,7 @@ export default function JoinTeamButton() {
         />
         <div
           ref={formPopupRef}
-          className="bg-white rounded-lg shadow-xl py-6 px-14 max-w-lg mx-4 z-10 relative animate-in fade-in zoom-in-95 duration-300"
+          className="bg-white rounded-lg shadow-xl py-6 md:px-14  px:8 md:max-w-lg max-w-md mx-4 z-10 relative animate-in fade-in zoom-in-95 duration-300"
         >
           <button
             onClick={() => setShowFormPopup(false)}
@@ -301,7 +301,7 @@ export default function JoinTeamButton() {
               />
             </div>
 
-            <div>
+            {/* <div>
               <label htmlFor="extra" className="block text-sm font-medium text-gray-700 mb-1">
                 Additional Comments
               </label>
@@ -312,7 +312,7 @@ export default function JoinTeamButton() {
                 value={formData.extra}
                 onChange={handleChange}
               />
-            </div>
+            </div> */}
 
             <div className="pt-2">
               <Button type="submit" className="w-full">
