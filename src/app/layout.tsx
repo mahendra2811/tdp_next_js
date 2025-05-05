@@ -91,30 +91,31 @@ export const metadata = createLanguageMetadata({
 });
 
 import { Suspense } from 'react';
-import ClientBody from './ClientBody';
 import JoinTeamPopup from '@/components/common/JoinTeamPopup';
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html className={`${geistSans.variable} ${geistMono.variable}`}>
-      {/* Initialize dataLayer */}
-      <Script id="gtm-dataLayer-init" strategy="beforeInteractive">
-        {`
-          window.dataLayer = window.dataLayer || [];
-        `}
-      </Script>
-      {/* Google Tag Manager */}
-      <Script id="google-tag-manager" strategy="afterInteractive">
-        {`
-          (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-          new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-          j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-          'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-          })(window,document,'script','dataLayer','GTM-WXBP85DC');
-        `}
-      </Script>
-      {/* End Google Tag Manager */}
-      <ClientBody>
+      <head>
+        {/* Initialize dataLayer */}
+        <Script id="gtm-dataLayer-init" strategy="beforeInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+          `}
+        </Script>
+        {/* Google Tag Manager */}
+        <Script id="google-tag-manager" strategy="afterInteractive">
+          {`
+            (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+            })(window,document,'script','dataLayer','GTM-WXBP85DC');
+          `}
+        </Script>
+        {/* End Google Tag Manager */}
+      </head>
+      <body className="antialiased min-h-screen" suppressHydrationWarning>
         <div className="min-h-screen flex flex-col bg-background text-foreground">
           {/* Google Tag Manager (noscript) */}
           <noscript>
@@ -137,7 +138,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </GalleryProvider>
           </LanguageProvider>
         </div>
-      </ClientBody>
+      </body>
     </html>
   );
 }

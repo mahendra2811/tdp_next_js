@@ -99,42 +99,24 @@ export default function JoinTeamButton() {
   };
 
   // Show popup at intervals
+  // Show popup at specific intervals: 15s, 2min, 5min
   useEffect(() => {
-    // Don't show on book-now page
-    if (pathname === '/book-now') return;
+    // Only show on home page
+    if (pathname !== '/') return;
 
-    const intervals = [
-      10 * 1000, // 10 seconds
-      30 * 1000, // 30 seconds
-      60 * 1000, // 60 seconds
-      120 * 1000, // 2 minutes
-      180 * 1000, // 3 minutes
-      300 * 1000, // 5 minutes
-      600 * 1000, // 10 minutes
-    ];
-
-    const timeoutIds: NodeJS.Timeout[] = [];
-
-    intervals.forEach((interval, index) => {
-      const totalDelay = intervals.slice(0, index + 1).reduce((sum, val) => sum + val, 0);
-
-      if (totalDelay <= 10 * 60 * 1000) {
-        // Up to 10 minutes
-        const timeoutId = setTimeout(() => {
-          if (!showFormPopup) {
-            setShowInitialPopup(true);
-          }
-        }, totalDelay);
-
-        timeoutIds.push(timeoutId);
+    // Show popup only once after 30 seconds
+    const timeoutId = setTimeout(() => {
+      // Only show popup if no other popup is currently open
+      if (!showFormPopup && !showInitialPopup && !showToast) {
+        setShowInitialPopup(true);
       }
-    });
+    }, 30 * 1000); // 30 seconds
 
+    // Cleanup function to clear the timeout
     return () => {
-      timeoutIds.forEach((id) => clearTimeout(id));
+      clearTimeout(timeoutId);
     };
-  }, [pathname, showFormPopup]);
-
+  }, [pathname, showFormPopup, showInitialPopup, showToast]);
   // Initial popup asking if they want to join
   const renderInitialPopup = () => {
     if (!showInitialPopup) return null;
@@ -147,7 +129,7 @@ export default function JoinTeamButton() {
         />
         <div
           ref={initialPopupRef}
-          className="bg-white rounded-lg shadow-xl py-6 px-14 max-w- mx-4 z-10 relative animate-in fade-in zoom-in-95 duration-300"
+          className="bg-white rounded-lg shadow-xl py-8 px-14 max-w-md mx-4 z-10 relative animate-in fade-in zoom-in-95 duration-300"
         >
           <button
             onClick={() => setShowInitialPopup(false)}
@@ -206,7 +188,7 @@ export default function JoinTeamButton() {
         />
         <div
           ref={formPopupRef}
-          className="bg-white rounded-lg shadow-xl py-6 md:px-14  px:8 md:max-w-lg max-w-md mx-4 z-10 relative animate-in fade-in zoom-in-95 duration-300"
+          className="bg-white rounded-lg shadow-xl py-8 md:px-14 px-8 md:max-w-lg max-w-md mx-4 z-10 relative animate-in fade-in zoom-in-95 duration-300"
         >
           <button
             onClick={() => setShowFormPopup(false)}
@@ -260,7 +242,7 @@ export default function JoinTeamButton() {
               />
             </div>
 
-            <div>
+            {/* <div>
               <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
                 Email
               </label>
@@ -271,7 +253,7 @@ export default function JoinTeamButton() {
                 value={formData.email}
                 onChange={handleChange}
               />
-            </div>
+            </div> */}
 
             <div>
               <label htmlFor="address" className="block text-sm font-medium text-gray-700 mb-1">
@@ -325,8 +307,8 @@ export default function JoinTeamButton() {
     );
   };
 
-  // Don't show on book-now page
-  if (pathname === '/book-now') return null;
+  // Only show on home page
+  if (pathname !== '/') return null;
 
   return (
     <>

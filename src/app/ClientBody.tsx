@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect } from 'react';
-import JoinTeamButton from '@/components/common/JoinTeamButton';
 
 export default function ClientBody({ children }: { children: React.ReactNode }) {
   // Remove any extension-added classes during hydration
@@ -13,7 +12,6 @@ export default function ClientBody({ children }: { children: React.ReactNode }) 
   return (
     <body className="antialiased min-h-screen" suppressHydrationWarning>
       {children}
-      <JoinTeamButton />
     </body>
   );
 }

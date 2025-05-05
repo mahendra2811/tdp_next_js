@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
 import { trackFormSubmit, trackEvent } from '@/utils/analytics';
+import { bookingApi } from '@/utils/api';
 
 // List of Indian states
 const indianStates = [
@@ -64,6 +65,7 @@ export default function BookingForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [apiError, setApiError] = useState<string | null>(null);
 
   // Get today's date in YYYY-MM-DD format for date inputs
   const today = new Date().toISOString().split('T')[0];
@@ -172,6 +174,9 @@ export default function BookingForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    // Reset any previous API errors
+    setApiError(null);
+
     // Validate form
     if (!validateForm()) {
       // Track form validation failure
@@ -192,22 +197,77 @@ export default function BookingForm() {
       tourists: formData.tourists,
     });
 
-    // Simulate form submission
-    await new Promise((resolve) => setTimeout(resolve, 1500));
+    try {
+      // Prepare data for API submission
+      const bookingData = {
+        name: formData.name,
+        phone: formData.phone,
+        email: formData.email || undefined, // Don't send empty string
+        country: formData.country,
+        otherCountry: formData.country === 'Other' ? formData.otherCountry : undefined,
+        state: formData.country === 'India' ? formData.state : undefined,
+        district: formData.country === 'India' ? formData.district : undefined,
+        pincode: formData.country === 'India' ? formData.pincode : undefined,
+        checkInDate: formData.checkInDate,
+        checkOutDate: formData.checkOutDate,
+        tourists: formData.tourists,
+        queries: formData.queries || undefined, // Don't send empty string
+      };
 
-    // Show success message
-    setIsSubmitted(true);
-    setIsSubmitting(false);
+      // Submit to API
+      const response = await bookingApi.create(bookingData);
 
-    // Track successful booking
-    trackEvent('booking_request_completed', {
-      form_name: 'booking_form',
-      country: formData.country,
-      check_in_date: formData.checkInDate,
-      check_out_date: formData.checkOutDate,
-      tourists: formData.tourists,
-      language: language,
-    });
+      if (response.success) {
+        // Show success message
+        setIsSubmitted(true);
+        
+        // Track successful booking
+        trackEvent('booking_request_completed', {
+          form_name: 'booking_form',
+          country: formData.country,
+          check_in_date: formData.checkInDate,
+          check_out_date: formData.checkOutDate,
+          tourists: formData.tourists,
+          language: language,
+        });
+      } else {
+        // Handle API error
+        if (response.errors && response.errors.length > 0) {
+          // Handle validation errors from the API
+          const newErrors: Record<string, string> = {};
+          response.errors.forEach((error) => {
+            newErrors[error.param] = error.msg;
+          });
+          setErrors(newErrors);
+          
+          // Track validation errors
+          trackEvent('booking_api_validation_error', {
+            form_name: 'booking_form',
+            errors: Object.keys(newErrors),
+          });
+        } else {
+          // Handle general API error
+          setApiError(response.message || 'An error occurred while submitting your booking. Please try again.');
+          
+          // Track API error
+          trackEvent('booking_api_error', {
+            form_name: 'booking_form',
+            error: response.message,
+          });
+        }
+      }
+    } catch (error) {
+      // Handle unexpected errors
+      console.error('Booking submission error:', error);
+      setApiError('An unexpected error occurred. Please try again later.');
+      
+      // Track unexpected error
+      trackEvent('booking_unexpected_error', {
+        form_name: 'booking_form',
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   if (isSubmitted) {
@@ -264,6 +324,32 @@ export default function BookingForm() {
               ? 'We look forward to providing you with a memorable desert experience!'
               : 'हम आपको एक यादगार रेगिस्तान अनुभव प्रदान करने के लिए तत्पर हैं!'}
           </p>
+        </div>
+      </div>
+    );
+  }
+
+  // Display API error message if there is one
+  if (apiError) {
+    return (
+      <div className="bg-red-50 p-6 rounded-lg border border-red-200 mb-6">
+        <h3 className="text-xl font-semibold text-red-700 mb-4">
+          {language === 'en' ? 'Submission Error' : 'सबमिशन त्रुटि'}
+        </h3>
+        <p className="text-red-600 mb-4">{apiError}</p>
+        <div className="flex space-x-4 mt-4">
+          <button
+            onClick={() => setApiError(null)}
+            className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition-colors"
+          >
+            {language === 'en' ? 'Try Again' : 'पुनः प्रयास करें'}
+          </button>
+          <button
+            onClick={() => window.location.reload()}
+            className="bg-gray-600 text-white px-4 py-2 rounded-md hover:bg-gray-700 transition-colors"
+          >
+            {language === 'en' ? 'Reset Form' : 'फॉर्म रीसेट करें'}
+          </button>
         </div>
       </div>
     );
@@ -499,9 +585,7 @@ export default function BookingForm() {
               errors.checkOutDate ? 'border-red-500' : 'border-gray-300'
             } rounded-md focus:ring-primary focus:border-primary`}
           />
-          {errors.checkOutDate && (
-            <p className="mt-1 text-sm text-red-600">{errors.checkOutDate}</p>
-          )}
+          {errors.checkOutDate && <p className="mt-1 text-sm text-red-600">{errors.checkOutDate}</p>}
         </div>
       </div>
 
@@ -516,8 +600,7 @@ export default function BookingForm() {
           name="tourists"
           value={formData.tourists}
           onChange={handleChange}
-          min="1"
-          max="50"
+          min={1}
           className={`w-full px-4 py-2 border ${
             errors.tourists ? 'border-red-500' : 'border-gray-300'
           } rounded-md focus:ring-primary focus:border-primary`}
@@ -525,10 +608,10 @@ export default function BookingForm() {
         {errors.tourists && <p className="mt-1 text-sm text-red-600">{errors.tourists}</p>}
       </div>
 
-      {/* Other Queries */}
+      {/* Queries/Comments */}
       <div>
         <label htmlFor="queries" className="block text-sm font-medium text-gray-700 mb-1">
-          {language === 'en' ? 'Any Other Queries?' : 'कोई अन्य प्रश्न?'} *
+          {language === 'en' ? 'Queries/Comments' : 'प्रश्न/टिप्पणियां'}
         </label>
         <textarea
           id="queries"
@@ -536,20 +619,17 @@ export default function BookingForm() {
           value={formData.queries}
           onChange={handleChange}
           rows={4}
-          className={`w-full px-4 py-2 border ${
-            errors.queries ? 'border-red-500' : 'border-gray-300'
-          } rounded-md focus:ring-primary focus:border-primary`}
+          className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-primary focus:border-primary"
           placeholder={
             language === 'en'
-              ? 'Any special requirements or questions?'
-              : 'कोई विशेष आवश्यकताएँ या प्रश्न?'
+              ? 'Any specific requirements or questions?'
+              : 'कोई विशिष्ट आवश्यकताएँ या प्रश्न?'
           }
         />
-        {errors.queries && <p className="mt-1 text-sm text-red-600">{errors.queries}</p>}
       </div>
 
       {/* Consent Checkbox */}
-      <div className="flex items-start mt-4">
+      <div className="flex items-start">
         <div className="flex items-center h-5">
           <input
             id="consent"
@@ -563,20 +643,18 @@ export default function BookingForm() {
           />
         </div>
         <div className="ml-3 text-sm">
-          <label
-            htmlFor="consent"
-            className={`font-medium ${errors.consent ? 'text-red-500' : 'text-gray-700'}`}
-          >
+          <label htmlFor="consent" className="font-medium text-gray-700">
             {language === 'en'
-              ? 'I hereby confirm that all the information provided in this form is accurate and complete, and I consent to Sharvan Patel using this information for communication and booking purposes.'
-              : 'मैं एतद्द्वारा पुष्टि करता/करती हूं कि इस फॉर्म में दी गई सभी जानकारी सटीक और पूर्ण है, और मैं शरवन पटेल को इस जानकारी का उपयोग संचार और बुकिंग उद्देश्यों के लिए करने की सहमति देता/देती हूं।'}
+              ? 'I agree to the terms and conditions'
+              : 'मैं नियमों और शर्तों से सहमत हूं'}
+            *
           </label>
           {errors.consent && <p className="mt-1 text-sm text-red-600">{errors.consent}</p>}
         </div>
       </div>
 
       {/* Submit Button */}
-      <div className="pt-4">
+      <div>
         <button
           type="submit"
           disabled={isSubmitting}
@@ -585,7 +663,7 @@ export default function BookingForm() {
           {isSubmitting ? (
             <span className="flex items-center justify-center">
               <svg
-                className="animate-spin -ml-1 mr-2 h-5 w-5 text-white"
+                className="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"

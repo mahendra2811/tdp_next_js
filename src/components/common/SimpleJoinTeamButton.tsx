@@ -189,7 +189,7 @@ export default function SimpleJoinTeamButton() {
                 />
               </div>
               
-              <div>
+              {/* <div>
                 <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">Email</label>
                 <Input
                   id="email"
@@ -198,7 +198,7 @@ export default function SimpleJoinTeamButton() {
                   value={formData.email}
                   onChange={handleChange}
                 />
-              </div>
+              </div> */}
               
               <div>
                 <label htmlFor="address" className="block text-sm font-medium text-gray-700 mb-1">Address *</label>
@@ -224,7 +224,7 @@ export default function SimpleJoinTeamButton() {
                 />
               </div>
               
-              <div>
+              {/* <div>
                 <label htmlFor="extra" className="block text-sm font-medium text-gray-700 mb-1">Additional Comments</label>
                 <TextArea
                   id="extra"
@@ -233,7 +233,7 @@ export default function SimpleJoinTeamButton() {
                   value={formData.extra}
                   onChange={handleChange}
                 />
-              </div>
+              </div> */}
               
               <div className="pt-2">
                 <Button type="submit" className="w-full">

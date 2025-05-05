@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
 import { trackFormSubmit, trackEvent } from '@/utils/analytics';
+import { leadApi } from '@/utils/api';
 
 export default function LeadForm() {
   const { language } = useLanguage();
@@ -14,6 +15,8 @@ export default function LeadForm() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [apiError, setApiError] = useState<string | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -21,10 +24,55 @@ export default function LeadForm() {
       ...prev,
       [name]: value,
     }));
+
+    // Clear error for this field if it exists
+    if (errors[name]) {
+      setErrors((prev) => {
+        const newErrors = { ...prev };
+        delete newErrors[name];
+        return newErrors;
+      });
+    }
+  };
+
+  const validateForm = () => {
+    const newErrors: Record<string, string> = {};
+
+    // Required fields
+    if (!formData.name.trim()) {
+      newErrors.name = language === 'en' ? 'Name is required' : 'नाम आवश्यक है';
+    }
+
+    if (!formData.email.trim()) {
+      newErrors.email = language === 'en' ? 'Email is required' : 'ईमेल आवश्यक है';
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      newErrors.email = language === 'en' ? 'Invalid email address' : 'अमान्य ईमेल पता';
+    }
+
+    if (!formData.phone.trim()) {
+      newErrors.phone = language === 'en' ? 'Phone number is required' : 'फोन नंबर आवश्यक है';
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Reset any previous API errors
+    setApiError(null);
+
+    // Validate form
+    if (!validateForm()) {
+      // Track form validation failure
+      trackEvent('form_validation_error', {
+        form_name: 'lead_inquiry_form',
+        errors: Object.keys(errors),
+      });
+      return;
+    }
+
     setIsSubmitting(true);
 
     // Track form submission
@@ -35,18 +83,57 @@ export default function LeadForm() {
       language: language,
     });
 
-    // Simulate form submission
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    try {
+      // Submit to API
+      const response = await leadApi.create(formData);
 
-    // Show success message
-    setIsSubmitted(true);
-    setIsSubmitting(false);
-
-    // Track successful submission
-    trackEvent('lead_inquiry_completed', {
-      form_name: 'lead_inquiry_form',
-      language: language,
-    });
+      if (response.success) {
+        // Show success message
+        setIsSubmitted(true);
+        
+        // Track successful submission
+        trackEvent('lead_inquiry_completed', {
+          form_name: 'lead_inquiry_form',
+          language: language,
+        });
+      } else {
+        // Handle API error
+        if (response.errors && response.errors.length > 0) {
+          // Handle validation errors from the API
+          const newErrors: Record<string, string> = {};
+          response.errors.forEach((error) => {
+            newErrors[error.param] = error.msg;
+          });
+          setErrors(newErrors);
+          
+          // Track validation errors
+          trackEvent('lead_api_validation_error', {
+            form_name: 'lead_inquiry_form',
+            errors: Object.keys(newErrors),
+          });
+        } else {
+          // Handle general API error
+          setApiError(response.message || 'An error occurred while submitting your inquiry. Please try again.');
+          
+          // Track API error
+          trackEvent('lead_api_error', {
+            form_name: 'lead_inquiry_form',
+            error: response.message,
+          });
+        }
+      }
+    } catch (error) {
+      // Handle unexpected errors
+      console.error('Lead submission error:', error);
+      setApiError('An unexpected error occurred. Please try again later.');
+      
+      // Track unexpected error
+      trackEvent('lead_unexpected_error', {
+        form_name: 'lead_inquiry_form',
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   if (isSubmitted) {
@@ -108,6 +195,32 @@ export default function LeadForm() {
     );
   }
 
+  // Display API error message if there is one
+  if (apiError) {
+    return (
+      <div className="bg-red-50 p-6 rounded-lg border border-red-200 mb-6">
+        <h3 className="text-xl font-semibold text-red-700 mb-4">
+          {language === 'en' ? 'Submission Error' : 'सबमिशन त्रुटि'}
+        </h3>
+        <p className="text-red-600 mb-4">{apiError}</p>
+        <div className="flex space-x-4 mt-4">
+          <button
+            onClick={() => setApiError(null)}
+            className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition-colors"
+          >
+            {language === 'en' ? 'Try Again' : 'पुनः प्रयास करें'}
+          </button>
+          <button
+            onClick={() => window.location.reload()}
+            className="bg-gray-600 text-white px-4 py-2 rounded-md hover:bg-gray-700 transition-colors"
+          >
+            {language === 'en' ? 'Reset Form' : 'फॉर्म रीसेट करें'}
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div>
@@ -120,10 +233,12 @@ export default function LeadForm() {
           name="name"
           value={formData.name}
           onChange={handleChange}
-          required
-          className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-primary focus:border-primary"
+          className={`w-full px-4 py-2 border ${
+            errors.name ? 'border-red-500' : 'border-gray-300'
+          } rounded-md focus:ring-primary focus:border-primary`}
           placeholder={language === 'en' ? 'Your name' : 'आपका नाम'}
         />
+        {errors.name && <p className="mt-1 text-sm text-red-600">{errors.name}</p>}
       </div>
 
       <div>
@@ -136,10 +251,12 @@ export default function LeadForm() {
           name="email"
           value={formData.email}
           onChange={handleChange}
-          required
-          className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-primary focus:border-primary"
+          className={`w-full px-4 py-2 border ${
+            errors.email ? 'border-red-500' : 'border-gray-300'
+          } rounded-md focus:ring-primary focus:border-primary`}
           placeholder={language === 'en' ? 'Your email' : 'आपका ईमेल'}
         />
+        {errors.email && <p className="mt-1 text-sm text-red-600">{errors.email}</p>}
       </div>
 
       <div>
@@ -152,10 +269,12 @@ export default function LeadForm() {
           name="phone"
           value={formData.phone}
           onChange={handleChange}
-          required
-          className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-primary focus:border-primary"
+          className={`w-full px-4 py-2 border ${
+            errors.phone ? 'border-red-500' : 'border-gray-300'
+          } rounded-md focus:ring-primary focus:border-primary`}
           placeholder={language === 'en' ? 'Your phone number' : 'आपका फोन नंबर'}
         />
+        {errors.phone && <p className="mt-1 text-sm text-red-600">{errors.phone}</p>}
       </div>
 
       <div>
