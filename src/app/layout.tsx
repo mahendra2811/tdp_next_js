@@ -4,6 +4,7 @@ import './globals.css';
 import Footer from '@/components/layout/Footer';
 import { LanguageProvider } from '@/context/LanguageContext';
 import { GalleryProvider } from '@/context/GalleryContext';
+import { AuthProvider } from '@/context/AuthContext';
 import { createLanguageMetadata } from '@/utils/seo';
 import Script from 'next/script';
 import PageViewTracker from '@/components/analytics/PageViewTracker';
@@ -131,11 +132,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <PageViewTracker />
           </Suspense>
           <LanguageProvider>
-            <GalleryProvider>
-              <main className="flex-1 w-full max-w-8xl mx-auto">{children}</main>
-              <Footer />
-              <JoinTeamPopup />
-            </GalleryProvider>
+            <AuthProvider>
+              <GalleryProvider>
+                <main className="flex-1 w-full max-w-8xl mx-auto">{children}</main>
+                <Footer />
+                <JoinTeamPopup />
+              </GalleryProvider>
+            </AuthProvider>
           </LanguageProvider>
         </div>
       </body>

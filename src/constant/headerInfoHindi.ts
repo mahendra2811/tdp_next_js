@@ -58,6 +58,21 @@ export const bookingInfoHindi = {
   url: '/book-now',
 };
 
+export const authInfoHindi = {
+  login: {
+    text: 'लॉगिन',
+    url: '#',
+  },
+  signup: {
+    text: 'साइन अप',
+    url: '#',
+  },
+  profile: {
+    text: 'प्रोफाइल',
+    url: '#',
+  },
+};
+
 export const brandInfoHindi = {
   name: 'थार डेजर्ट फोटोग्राफी',
   logo: '/assets/Images/logo-TDP.png',

@@ -2,29 +2,28 @@ import { useEffect, RefObject } from 'react';
 
 /**
  * Hook that alerts when you click outside of the passed ref
+ * @param ref - Reference to the element to detect clicks outside of
+ * @param callback - Function to call when a click outside is detected
  */
-export function useClickOutside<T extends HTMLElement = HTMLElement>(
+function useClickOutside<T extends HTMLElement = HTMLElement>(
   ref: RefObject<T>,
-  handler: (event: MouseEvent | TouchEvent) => void
+  callback: () => void
 ): void {
   useEffect(() => {
-    const listener = (event: MouseEvent | TouchEvent) => {
-      // Do nothing if clicking ref's element or descendent elements
-      if (!ref.current || ref.current.contains(event.target as Node)) {
-        return;
+    function handleClickOutside(event: MouseEvent): void {
+      if (ref.current && !ref.current.contains(event.target as Node)) {
+        callback();
       }
-      
-      handler(event);
-    };
+    }
+
+    // Bind the event listener
+    document.addEventListener('mousedown', handleClickOutside);
     
-    document.addEventListener('mousedown', listener);
-    document.addEventListener('touchstart', listener);
-    
+    // Unbind the event listener on cleanup
     return () => {
-      document.removeEventListener('mousedown', listener);
-      document.removeEventListener('touchstart', listener);
+      document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [ref, handler]);
+  }, [ref, callback]);
 }
 
 export default useClickOutside;

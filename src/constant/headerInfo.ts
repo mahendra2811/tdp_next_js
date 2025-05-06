@@ -52,10 +52,24 @@ export const navigationLinks = [
     url: '/team',
   },
 ];
-
 export const bookingInfo = {
   text: 'Book Now',
   url: '/book-now',
+};
+
+export const authInfo = {
+  login: {
+    text: 'Login',
+    url: '#',
+  },
+  signup: {
+    text: 'Sign Up',
+    url: '#',
+  },
+  profile: {
+    text: 'Profile',
+    url: '#',
+  },
 };
 
 export const brandInfo = {
