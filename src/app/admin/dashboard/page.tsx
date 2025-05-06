@@ -9,6 +9,7 @@ interface DashboardStats {
   bookings: number;
   teamApplications: number;
   redirects: number;
+  blogs: number;
 }
 
 export default function AdminDashboard() {
@@ -17,6 +18,7 @@ export default function AdminDashboard() {
     bookings: 0,
     teamApplications: 0,
     redirects: 0,
+    blogs: 0,
   });
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -37,6 +39,7 @@ export default function AdminDashboard() {
           bookings: 8,
           teamApplications: 5,
           redirects: 10,
+          blogs: 3,
         });
         setIsLoading(false);
         return;
@@ -61,6 +64,7 @@ export default function AdminDashboard() {
             bookings: bookingsResponse.data?.length || 0,
             teamApplications: teamAppsResponse.data?.length || 0,
             redirects: redirectsResponse.data?.length || 0,
+            blogs: 3, // Placeholder until we have a real API endpoint
           });
         } else {
           setError('Failed to load dashboard stats');
@@ -105,7 +109,7 @@ export default function AdminDashboard() {
         </div>
       )}
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-8">
         {/* Leads Card */}
         <div className="bg-white shadow rounded-lg p-6">
           <div className="flex items-center justify-between">
@@ -241,11 +245,45 @@ export default function AdminDashboard() {
             </Link>
           </div>
         </div>
+
+        {/* Blogs Card */}
+        <div className="bg-white shadow rounded-lg p-6">
+          <div className="flex items-center justify-between">
+            <div>
+              <h2 className="text-sm font-medium text-gray-500">Blog Posts</h2>
+              <p className="text-3xl font-bold text-gray-900 mt-1">{stats.blogs}</p>
+            </div>
+            <div className="bg-indigo-100 p-3 rounded-full">
+              <svg
+                className="w-6 h-6 text-indigo-600"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"
+                />
+              </svg>
+            </div>
+          </div>
+          <div className="mt-4">
+            <Link
+              href="/admin/blogs"
+              className="text-sm font-medium text-blue-600 hover:text-blue-500"
+            >
+              Manage blog posts &rarr;
+            </Link>
+          </div>
+        </div>
       </div>
 
       <div className="bg-white shadow rounded-lg p-6">
         <h2 className="text-lg font-semibold mb-4">Quick Actions</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
           <Link
             href="/admin/leads"
             className="bg-blue-50 hover:bg-blue-100 text-blue-700 font-medium py-3 px-4 rounded-lg text-center"
@@ -269,6 +307,12 @@ export default function AdminDashboard() {
             className="bg-green-50 hover:bg-green-100 text-green-700 font-medium py-3 px-4 rounded-lg text-center"
           >
             View Bookings
+          </Link>
+          <Link
+            href="/admin/blogs"
+            className="bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-medium py-3 px-4 rounded-lg text-center"
+          >
+            Manage Blog
           </Link>
         </div>
       </div>

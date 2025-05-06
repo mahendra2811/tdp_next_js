@@ -63,7 +63,9 @@ making proper components that reflect the design of the original page, utilizing
 
 
 
-
+Login with admin credentials (email: admin@thardesertphotography.com, password: from .env)
+email :- admin@tdp.com
+password :- Admin@1234 
 
 
 

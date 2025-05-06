@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { adminApi } from '@/utils/api';
+import DeleteConfirmationModal from '@/components/admin/DeleteConfirmationModal';
 
 interface LeadData {
   _id: string;
@@ -74,6 +75,10 @@ export default function LeadsPage() {
   const [error, setError] = useState<string | null>(null);
   const [isUsingTempToken, setIsUsingTempToken] = useState(false);
 
+  // State for delete confirmation modal
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [leadToDelete, setLeadToDelete] = useState<string | null>(null);
+
   // Fetch leads
   const fetchLeads = async () => {
     setIsLoading(true);
@@ -115,14 +120,19 @@ export default function LeadsPage() {
   }, []);
 
   // Handle status update
-  const handleStatusUpdate = async (id: string, newStatus: 'new' | 'contacted' | 'converted' | 'closed') => {
+  const handleStatusUpdate = async (
+    id: string,
+    newStatus: 'new' | 'contacted' | 'converted' | 'closed'
+  ) => {
     setError(null);
 
     if (isUsingTempToken) {
       // Update mock data
       setLeads(
         leads.map((lead) =>
-          lead._id === id ? { ...lead, status: newStatus, updatedAt: new Date().toISOString() } : lead
+          lead._id === id
+            ? { ...lead, status: newStatus, updatedAt: new Date().toISOString() }
+            : lead
         )
       );
       return;
@@ -142,22 +152,29 @@ export default function LeadsPage() {
     }
   };
 
-  // Handle delete
-  const handleDelete = async (id: string) => {
-    if (!window.confirm('Are you sure you want to delete this lead?')) {
-      return;
-    }
+  // Open delete confirmation modal
+  const openDeleteModal = (id: string) => {
+    setLeadToDelete(id);
+    setIsDeleteModalOpen(true);
+  };
+
+  // Handle delete after confirmation
+  const handleDelete = async () => {
+    if (!leadToDelete) return;
 
     setError(null);
 
     if (isUsingTempToken) {
       // Update mock data
-      setLeads(leads.filter((lead) => lead._id !== id));
+      setLeads(leads.filter((lead) => lead._id !== leadToDelete));
+
+      // Reset delete state
+      setLeadToDelete(null);
       return;
     }
 
     try {
-      const response = await adminApi.deleteLead(id);
+      const response = await adminApi.deleteLead(leadToDelete);
 
       if (response.success) {
         fetchLeads();
@@ -167,6 +184,9 @@ export default function LeadsPage() {
     } catch (err) {
       console.error('Error deleting lead:', err);
       setError('An unexpected error occurred. Please try again.');
+    } finally {
+      // Reset delete state
+      setLeadToDelete(null);
     }
   };
 
@@ -212,9 +232,7 @@ export default function LeadsPage() {
       {/* Leads Table */}
       <div className="bg-white shadow rounded-lg overflow-hidden">
         {leads.length === 0 ? (
-          <div className="p-6 text-center text-gray-500">
-            No leads found.
-          </div>
+          <div className="p-6 text-center text-gray-500">No leads found.</div>
         ) : (
           <div className="overflow-x-auto">
             <table className="min-w-full divide-y divide-gray-200">
@@ -258,7 +276,12 @@ export default function LeadsPage() {
                     <td className="px-6 py-4 whitespace-nowrap">
                       <select
                         value={lead.status}
-                        onChange={(e) => handleStatusUpdate(lead._id, e.target.value as 'new' | 'contacted' | 'converted' | 'closed')}
+                        onChange={(e) =>
+                          handleStatusUpdate(
+                            lead._id,
+                            e.target.value as 'new' | 'contacted' | 'converted' | 'closed'
+                          )
+                        }
                         className={`px-2 py-1 text-xs leading-5 font-semibold rounded-full ${getStatusColor(
                           lead.status
                         )} border border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent`}
@@ -274,7 +297,7 @@ export default function LeadsPage() {
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                       <button
-                        onClick={() => handleDelete(lead._id)}
+                        onClick={() => openDeleteModal(lead._id)}
                         className="text-red-600 hover:text-red-900"
                       >
                         Delete
@@ -287,6 +310,17 @@ export default function LeadsPage() {
           </div>
         )}
       </div>
+
+      {/* Delete Confirmation Modal */}
+      <DeleteConfirmationModal
+        isOpen={isDeleteModalOpen}
+        onClose={() => setIsDeleteModalOpen(false)}
+        onConfirm={handleDelete}
+        itemName={
+          leadToDelete ? leads.find((lead) => lead._id === leadToDelete)?.name || 'this lead' : ''
+        }
+        title="Delete Lead"
+      />
     </div>
   );
 }

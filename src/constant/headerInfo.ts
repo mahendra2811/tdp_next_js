@@ -40,6 +40,10 @@ export const navigationLinks = [
     url: '/gallery',
   },
   {
+    name: 'Blog',
+    url: '/blog',
+  },
+  {
     name: 'Contact Me',
     url: '/contact',
   },

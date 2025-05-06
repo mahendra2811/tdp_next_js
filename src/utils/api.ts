@@ -75,6 +75,21 @@ interface RedirectData {
   updatedAt: Date;
 }
 
+export interface BlogData {
+  _id: string;
+  title: string;
+  slug: string;
+  description: string;
+  content: string;
+  coverImage: string;
+  author: string;
+  tags: string[];
+  publishedDate: Date;
+  isPublished: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
 // Base URL for API requests
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001/api';
 
@@ -148,7 +163,7 @@ const apiRequest = async <T>(
 
     console.log(`API Request: ${method} ${endpoint}`);
     console.log('Requires Auth:', requiresAuth);
-    
+
     if (requiresAuth) {
       console.log('Auth Token Present:', !!getToken());
     }
@@ -201,7 +216,7 @@ const apiRequest = async <T>(
   } catch (error: unknown) {
     const errorMessage = error instanceof Error ? error.message : 'Network error';
     console.error('API Request Error:', errorMessage);
-    
+
     return {
       success: false,
       message: errorMessage,
@@ -324,6 +339,38 @@ export const adminApi = {
     apiRequest<{ success: boolean }>(`/auth/users/${id}`, 'DELETE', undefined, true),
 };
 
+/**
+ * API functions for blogs
+ */
+export const blogApi = {
+  // Public blog endpoints
+  getBlogs: (page = 1, limit = 10) =>
+    apiRequest<{ data: BlogData[]; total: number; totalPages: number; currentPage: number }>(
+      `/blogs?page=${page}&limit=${limit}`,
+      'GET'
+    ),
+  getBlogBySlug: (slug: string) => apiRequest<BlogData>(`/blogs/slug/${slug}`, 'GET'),
+  getRelatedBlogs: (slug: string) => apiRequest<BlogData[]>(`/blogs/related/${slug}`, 'GET'),
+  searchBlogs: (query: string) =>
+    apiRequest<BlogData[]>(`/blogs/search?q=${encodeURIComponent(query)}`, 'GET'),
+
+  // Admin blog endpoints
+  getAllBlogs: (page = 1, limit = 10) =>
+    apiRequest<{ data: BlogData[]; total: number; totalPages: number; currentPage: number }>(
+      `/blogs/admin?page=${page}&limit=${limit}&admin=true`,
+      'GET',
+      undefined,
+      true
+    ),
+  getBlogById: (id: string) => apiRequest<BlogData>(`/blogs/admin/${id}`, 'GET', undefined, true),
+  createBlog: (data: Omit<BlogData, '_id' | 'createdAt' | 'updatedAt'>) =>
+    apiRequest<BlogData>('/blogs', 'POST', data as Record<string, unknown>, true),
+  updateBlog: (id: string, data: Partial<Omit<BlogData, '_id' | 'createdAt' | 'updatedAt'>>) =>
+    apiRequest<BlogData>(`/blogs/${id}`, 'PUT', data as Record<string, unknown>, true),
+  deleteBlog: (id: string) =>
+    apiRequest<{ success: boolean }>(`/blogs/${id}`, 'DELETE', undefined, true),
+};
+
 // Export all API functions
 export default {
   bookingApi,
@@ -331,4 +378,5 @@ export default {
   teamApplicationApi,
   authApi,
   adminApi,
+  blogApi,
 };

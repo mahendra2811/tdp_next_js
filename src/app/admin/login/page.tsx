@@ -88,7 +88,7 @@ export default function AdminLogin() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-              placeholder="admin@tdp.com"
+              placeholder="Email address"
               required
             />
           </div>
@@ -119,7 +119,6 @@ export default function AdminLogin() {
 
         <div className="mt-4 text-center text-sm text-gray-600">
           <p>This area is restricted to authorized personnel only.</p>
-          <p className="mt-2 text-xs text-gray-500">Use admin@tdp.com / Admin@1234</p>
         </div>
       </div>
     </div>

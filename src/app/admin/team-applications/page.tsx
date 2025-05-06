@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { adminApi } from '@/utils/api';
+import DeleteConfirmationModal from '@/components/admin/DeleteConfirmationModal';
 
 interface TeamApplicationData {
   _id: string;
@@ -24,7 +25,8 @@ const mockApplications: TeamApplicationData[] = [
     mobile: '+91 9876543210',
     email: 'rahul.sharma@example.com',
     address: '123 Main St, Jodhpur, Rajasthan',
-    reason: 'I am passionate about wildlife photography and have been documenting desert wildlife for 3 years.',
+    reason:
+      'I am passionate about wildlife photography and have been documenting desert wildlife for 3 years.',
     extra: 'I have my own photography equipment and have published in local magazines.',
     status: 'pending',
     createdAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
@@ -47,7 +49,8 @@ const mockApplications: TeamApplicationData[] = [
     mobile: '+91 9876543212',
     email: 'amit.kumar@example.com',
     address: '789 Desert Road, Bikaner, Rajasthan',
-    reason: 'I have been working as a tour guide for 5 years and want to specialize in wildlife photography tours.',
+    reason:
+      'I have been working as a tour guide for 5 years and want to specialize in wildlife photography tours.',
     extra: 'I speak Hindi, English, and German fluently.',
     status: 'accepted',
     createdAt: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000).toISOString(),
@@ -69,7 +72,8 @@ const mockApplications: TeamApplicationData[] = [
     mobile: '+91 9876543214',
     email: 'vikram.m@example.com',
     address: '202 Desert View, Jaipur, Rajasthan',
-    reason: 'I am a wildlife biologist specializing in desert ecosystems and want to contribute to your educational tours.',
+    reason:
+      'I am a wildlife biologist specializing in desert ecosystems and want to contribute to your educational tours.',
     extra: 'I have published research papers on the Great Indian Bustard conservation.',
     status: 'pending',
     createdAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
@@ -83,6 +87,10 @@ export default function TeamApplicationsPage() {
   const [error, setError] = useState<string | null>(null);
   const [selectedApplication, setSelectedApplication] = useState<TeamApplicationData | null>(null);
   const [isUsingTempToken, setIsUsingTempToken] = useState(false);
+
+  // State for delete confirmation modal
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [applicationToDelete, setApplicationToDelete] = useState<string | null>(null);
 
   // Fetch team applications
   const fetchApplications = async () => {
@@ -125,7 +133,10 @@ export default function TeamApplicationsPage() {
   }, []);
 
   // Handle status update
-  const handleStatusUpdate = async (id: string, newStatus: 'pending' | 'reviewed' | 'accepted' | 'rejected') => {
+  const handleStatusUpdate = async (
+    id: string,
+    newStatus: 'pending' | 'reviewed' | 'accepted' | 'rejected'
+  ) => {
     setError(null);
 
     if (isUsingTempToken) {
@@ -135,16 +146,16 @@ export default function TeamApplicationsPage() {
           app._id === id ? { ...app, status: newStatus, updatedAt: new Date().toISOString() } : app
         )
       );
-      
+
       // Update selected application if it's the one being updated
       if (selectedApplication && selectedApplication._id === id) {
         setSelectedApplication({
           ...selectedApplication,
           status: newStatus,
-          updatedAt: new Date().toISOString()
+          updatedAt: new Date().toISOString(),
         });
       }
-      
+
       return;
     }
 
@@ -162,32 +173,38 @@ export default function TeamApplicationsPage() {
     }
   };
 
-  // Handle delete
-  const handleDelete = async (id: string) => {
-    if (!window.confirm('Are you sure you want to delete this application?')) {
-      return;
-    }
+  // Open delete confirmation modal
+  const openDeleteModal = (id: string) => {
+    setApplicationToDelete(id);
+    setIsDeleteModalOpen(true);
+  };
+
+  // Handle delete after confirmation
+  const handleDelete = async () => {
+    if (!applicationToDelete) return;
 
     setError(null);
 
     if (isUsingTempToken) {
       // Update mock data
-      setApplications(applications.filter((app) => app._id !== id));
-      
+      setApplications(applications.filter((app) => app._id !== applicationToDelete));
+
       // Clear selected application if it's the one being deleted
-      if (selectedApplication && selectedApplication._id === id) {
+      if (selectedApplication && selectedApplication._id === applicationToDelete) {
         setSelectedApplication(null);
       }
-      
+
+      // Reset delete state
+      setApplicationToDelete(null);
       return;
     }
 
     try {
-      const response = await adminApi.deleteTeamApplication(id);
+      const response = await adminApi.deleteTeamApplication(applicationToDelete);
 
       if (response.success) {
         fetchApplications();
-        if (selectedApplication && selectedApplication._id === id) {
+        if (selectedApplication && selectedApplication._id === applicationToDelete) {
           setSelectedApplication(null);
         }
       } else {
@@ -196,6 +213,9 @@ export default function TeamApplicationsPage() {
     } catch (err) {
       console.error('Error deleting application:', err);
       setError('An unexpected error occurred. Please try again.');
+    } finally {
+      // Reset delete state
+      setApplicationToDelete(null);
     }
   };
 
@@ -243,9 +263,7 @@ export default function TeamApplicationsPage() {
         <div className="lg:col-span-2">
           <div className="bg-white shadow rounded-lg overflow-hidden">
             {applications.length === 0 ? (
-              <div className="p-6 text-center text-gray-500">
-                No team applications found.
-              </div>
+              <div className="p-6 text-center text-gray-500">No team applications found.</div>
             ) : (
               <div className="overflow-x-auto">
                 <table className="min-w-full divide-y divide-gray-200">
@@ -270,9 +288,11 @@ export default function TeamApplicationsPage() {
                   </thead>
                   <tbody className="bg-white divide-y divide-gray-200">
                     {applications.map((app) => (
-                      <tr 
-                        key={app._id} 
-                        className={`cursor-pointer hover:bg-gray-50 ${selectedApplication?._id === app._id ? 'bg-blue-50' : ''}`}
+                      <tr
+                        key={app._id}
+                        className={`cursor-pointer hover:bg-gray-50 ${
+                          selectedApplication?._id === app._id ? 'bg-blue-50' : ''
+                        }`}
                         onClick={() => setSelectedApplication(app)}
                       >
                         <td className="px-6 py-4 whitespace-nowrap">
@@ -287,7 +307,10 @@ export default function TeamApplicationsPage() {
                             value={app.status}
                             onChange={(e) => {
                               e.stopPropagation();
-                              handleStatusUpdate(app._id, e.target.value as 'pending' | 'reviewed' | 'accepted' | 'rejected');
+                              handleStatusUpdate(
+                                app._id,
+                                e.target.value as 'pending' | 'reviewed' | 'accepted' | 'rejected'
+                              );
                             }}
                             onClick={(e) => e.stopPropagation()}
                             className={`px-2 py-1 text-xs leading-5 font-semibold rounded-full ${getStatusColor(
@@ -307,7 +330,7 @@ export default function TeamApplicationsPage() {
                           <button
                             onClick={(e) => {
                               e.stopPropagation();
-                              handleDelete(app._id);
+                              openDeleteModal(app._id);
                             }}
                             className="text-red-600 hover:text-red-900"
                           >
@@ -328,45 +351,49 @@ export default function TeamApplicationsPage() {
           {selectedApplication ? (
             <div className="bg-white shadow rounded-lg p-6">
               <h2 className="text-lg font-semibold mb-4">Application Details</h2>
-              
+
               <div className="space-y-4">
                 <div>
                   <h3 className="text-sm font-medium text-gray-500">Name</h3>
                   <p className="mt-1">{selectedApplication.name}</p>
                 </div>
-                
+
                 <div>
                   <h3 className="text-sm font-medium text-gray-500">Contact</h3>
                   <p className="mt-1">{selectedApplication.email || 'No email'}</p>
                   <p className="mt-1">{selectedApplication.mobile}</p>
                 </div>
-                
+
                 <div>
                   <h3 className="text-sm font-medium text-gray-500">Address</h3>
                   <p className="mt-1">{selectedApplication.address}</p>
                 </div>
-                
+
                 <div>
                   <h3 className="text-sm font-medium text-gray-500">Reason for Applying</h3>
                   <p className="mt-1">{selectedApplication.reason}</p>
                 </div>
-                
+
                 {selectedApplication.extra && (
                   <div>
                     <h3 className="text-sm font-medium text-gray-500">Additional Information</h3>
                     <p className="mt-1">{selectedApplication.extra}</p>
                   </div>
                 )}
-                
+
                 <div>
                   <h3 className="text-sm font-medium text-gray-500">Status</h3>
                   <div className="mt-1">
-                    <span className={`px-2 py-1 text-xs leading-5 font-semibold rounded-full ${getStatusColor(selectedApplication.status)}`}>
+                    <span
+                      className={`px-2 py-1 text-xs leading-5 font-semibold rounded-full ${getStatusColor(
+                        selectedApplication.status
+                      )}`}
+                    >
                       {formatStatus(selectedApplication.status)}
                     </span>
                   </div>
                 </div>
-                
+
                 <div>
                   <h3 className="text-sm font-medium text-gray-500">Application Date</h3>
                   <p className="mt-1">{formatDate(selectedApplication.createdAt)}</p>
@@ -380,6 +407,20 @@ export default function TeamApplicationsPage() {
           )}
         </div>
       </div>
+
+      {/* Delete Confirmation Modal */}
+      <DeleteConfirmationModal
+        isOpen={isDeleteModalOpen}
+        onClose={() => setIsDeleteModalOpen(false)}
+        onConfirm={handleDelete}
+        itemName={
+          applicationToDelete
+            ? applications.find((app) => app._id === applicationToDelete)?.name ||
+              'this application'
+            : ''
+        }
+        title="Delete Application"
+      />
     </div>
   );
 }

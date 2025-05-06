@@ -40,6 +40,10 @@ export const navigationLinksHindi = [
     url: '/gallery',
   },
   {
+    name: 'ब्लॉग',
+    url: '/blog',
+  },
+  {
     name: 'संपर्क करें',
     url: '/contact',
   },

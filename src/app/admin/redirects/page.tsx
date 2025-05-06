@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { adminApi } from '@/utils/api';
+import DeleteConfirmationModal from '@/components/admin/DeleteConfirmationModal';
 
 interface RedirectData {
   _id: string;
@@ -79,7 +80,11 @@ export default function RedirectsPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [isUsingTempToken, setIsUsingTempToken] = useState(false);
-  
+
+  // State for delete confirmation modal
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [redirectToDelete, setRedirectToDelete] = useState<string | null>(null);
+
   // Form state
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [formData, setFormData] = useState<{
@@ -139,9 +144,11 @@ export default function RedirectsPage() {
   }, []);
 
   // Handle form input change
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => {
     const { name, value, type } = e.target;
-    
+
     if (type === 'checkbox') {
       const checked = (e.target as HTMLInputElement).checked;
       setFormData({ ...formData, [name]: checked });
@@ -188,7 +195,7 @@ export default function RedirectsPage() {
         };
         setRedirects([...redirects, newRedirect]);
       }
-      
+
       // Reset form
       setFormData({
         slug: '',
@@ -204,7 +211,7 @@ export default function RedirectsPage() {
 
     try {
       let response;
-      
+
       if (isEditing && formData._id) {
         // Update existing redirect
         response = await adminApi.updateRedirect(formData._id, {
@@ -259,22 +266,29 @@ export default function RedirectsPage() {
     setIsFormOpen(true);
   };
 
-  // Handle delete
-  const handleDelete = async (id: string) => {
-    if (!window.confirm('Are you sure you want to delete this redirect?')) {
-      return;
-    }
+  // Open delete confirmation modal
+  const openDeleteModal = (id: string) => {
+    setRedirectToDelete(id);
+    setIsDeleteModalOpen(true);
+  };
+
+  // Handle delete after confirmation
+  const handleDelete = async () => {
+    if (!redirectToDelete) return;
 
     setError(null);
 
     if (isUsingTempToken) {
       // Update mock data
-      setRedirects(redirects.filter((redirect) => redirect._id !== id));
+      setRedirects(redirects.filter((redirect) => redirect._id !== redirectToDelete));
+
+      // Reset delete state
+      setRedirectToDelete(null);
       return;
     }
 
     try {
-      const response = await adminApi.deleteRedirect(id);
+      const response = await adminApi.deleteRedirect(redirectToDelete);
 
       if (response.success) {
         fetchRedirects();
@@ -284,6 +298,9 @@ export default function RedirectsPage() {
     } catch (err) {
       console.error('Error deleting redirect:', err);
       setError('An unexpected error occurred. Please try again.');
+    } finally {
+      // Reset delete state
+      setRedirectToDelete(null);
     }
   };
 
@@ -345,7 +362,9 @@ export default function RedirectsPage() {
       {/* Redirect Form */}
       {isFormOpen && (
         <div className="bg-white shadow rounded-lg p-6 mb-6">
-          <h2 className="text-lg font-semibold mb-4">{isEditing ? 'Edit Redirect' : 'Add New Redirect'}</h2>
+          <h2 className="text-lg font-semibold mb-4">
+            {isEditing ? 'Edit Redirect' : 'Add New Redirect'}
+          </h2>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
@@ -363,7 +382,8 @@ export default function RedirectsPage() {
                   required
                 />
                 <p className="mt-1 text-xs text-gray-500">
-                  This will be used in the URL: https://yourdomain.com/r/<strong>{formData.slug || 'slug'}</strong>
+                  This will be used in the URL: https://yourdomain.com/r/
+                  <strong>{formData.slug || 'slug'}</strong>
                 </p>
               </div>
               <div>
@@ -400,7 +420,10 @@ export default function RedirectsPage() {
                 </select>
               </div>
               <div>
-                <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-1">
+                <label
+                  htmlFor="description"
+                  className="block text-sm font-medium text-gray-700 mb-1"
+                >
                   Description
                 </label>
                 <input
@@ -486,18 +509,33 @@ export default function RedirectsPage() {
                     </td>
                     <td className="px-6 py-4">
                       <div className="text-sm text-gray-900 max-w-xs truncate">
-                        <a href={redirect.targetUrl} target="_blank" rel="noopener noreferrer" className="hover:underline">
+                        <a
+                          href={redirect.targetUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="hover:underline"
+                        >
                           {redirect.targetUrl}
                         </a>
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <span className={`px-2 py-1 text-xs leading-5 font-semibold rounded-full ${getCategoryColor(redirect.category)}`}>
+                      <span
+                        className={`px-2 py-1 text-xs leading-5 font-semibold rounded-full ${getCategoryColor(
+                          redirect.category
+                        )}`}
+                      >
                         {formatCategory(redirect.category)}
                       </span>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <span className={`px-2 py-1 text-xs leading-5 font-semibold rounded-full ${redirect.active ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+                      <span
+                        className={`px-2 py-1 text-xs leading-5 font-semibold rounded-full ${
+                          redirect.active
+                            ? 'bg-green-100 text-green-800'
+                            : 'bg-red-100 text-red-800'
+                        }`}
+                      >
                         {redirect.active ? 'Active' : 'Inactive'}
                       </span>
                     </td>
@@ -512,7 +550,7 @@ export default function RedirectsPage() {
                         Edit
                       </button>
                       <button
-                        onClick={() => handleDelete(redirect._id)}
+                        onClick={() => openDeleteModal(redirect._id)}
                         className="text-red-600 hover:text-red-900"
                       >
                         Delete
@@ -525,6 +563,19 @@ export default function RedirectsPage() {
           </div>
         )}
       </div>
+
+      {/* Delete Confirmation Modal */}
+      <DeleteConfirmationModal
+        isOpen={isDeleteModalOpen}
+        onClose={() => setIsDeleteModalOpen(false)}
+        onConfirm={handleDelete}
+        itemName={
+          redirectToDelete
+            ? redirects.find((r) => r._id === redirectToDelete)?.slug || 'this redirect'
+            : ''
+        }
+        title="Delete Redirect"
+      />
     </div>
   );
 }

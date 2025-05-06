@@ -61,6 +61,10 @@ export const footerLinks = [
     url: '/destination',
   },
   {
+    name: 'Admin Login',
+    url: '/admin/login',
+  },
+  {
     name: 'Gallery',
     url: '/gallery',
   },

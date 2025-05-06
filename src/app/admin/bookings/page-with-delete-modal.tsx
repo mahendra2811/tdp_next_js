@@ -140,7 +140,7 @@ export default function BookingsPage() {
   };
 
   // Handle booking deletion after confirmation
-  const handleDelete = async () => {
+  const confirmDelete = async () => {
     if (!bookingToDelete) return;
     
     setError(null);
@@ -164,10 +164,10 @@ export default function BookingsPage() {
     } catch (err) {
       console.error('Error deleting booking:', err);
       setError('An unexpected error occurred. Please try again.');
-    } finally {
-      // Reset delete state
-      setBookingToDelete(null);
     }
+    
+    // Reset delete state
+    setBookingToDelete(null);
   };
 
   // View booking details
@@ -183,6 +183,11 @@ export default function BookingsPage() {
       </div>
     );
   }
+
+  // Find the name of the booking to delete for the confirmation modal
+  const bookingToDeleteName = bookingToDelete 
+    ? bookings.find(b => b._id === bookingToDelete)?.name || 'this booking'
+    : '';
 
   return (
     <div>
@@ -500,8 +505,8 @@ export default function BookingsPage() {
       <DeleteConfirmationModal
         isOpen={isDeleteModalOpen}
         onClose={() => setIsDeleteModalOpen(false)}
-        onConfirm={handleDelete}
-        itemName={bookingToDelete ? bookings.find(b => b._id === bookingToDelete)?.name || 'this booking' : ''}
+        onConfirm={confirmDelete}
+        itemName={`booking for ${bookingToDeleteName}`}
         title="Delete Booking"
       />
     </div>
@@ -523,20 +528,16 @@ function getStatusColor(status: string): string {
 
 function formatDate(dateString: string): string {
   const date = new Date(dateString);
-  return date.toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric',
-  });
+  return date.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' });
 }
 
 function formatDateTime(dateTimeString: string): string {
   const date = new Date(dateTimeString);
-  return date.toLocaleDateString('en-US', {
+  return date.toLocaleDateString('en-US', { 
+    day: 'numeric', 
+    month: 'short', 
     year: 'numeric',
-    month: 'short',
-    day: 'numeric',
     hour: '2-digit',
-    minute: '2-digit',
+    minute: '2-digit'
   });
 }
