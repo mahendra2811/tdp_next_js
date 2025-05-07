@@ -1,0 +1,102 @@
+now access @/Thar_desert_photography/ 
+
+this whole folder .
+i will give you one of file or one of page from this you have to convert that page (.html  with some js and css also used in that )
+
+you have to split  that in my this project .
+you have to write code such that you have to make exect same design of that page .
+in that page their is many sections and many components are their which were same used in many pages .so you have to seprate each section seprately .
+
+for each section you can use component folder to write code and you have to use constant folder to store constant file of that section and have to access that from their to here .
+
+
+
+so as suumarie you have to first see which file(.html) i have provided you to do work on that .
+then make different section from that .
+in section make commone component code seprate .
+put constant data in constant folder and access from their through map and any other things required .
+
+and for images i have already puted all images that used in these project in public / assets/ images 
+
+you can also arrenge images accroding to you and  make it more easy to understand 
+
+
+
+Once you have reviewed the provided HTML file, identify the distinct sections and components within it. Create separate React components for each section, ensuring to maintain the same design as the original page. Store any constant data used in these sections in the constants folder, and access them in
+
+your React components using the appropriate mapping techniques. Ensure that each component is reusable and that the constants are well-organized for easy access and modification.
+After creating the components, ensure to import them into the main application file and render them accordingly. Test each component to verify that they replicate the original design and functionality accurately, and make adjustments as necessary to ensure responsiveness and compatibility across different devices.
+Finally, document your components and constants for future reference, including usage examples and any dependencies they may have. This will facilitate easier updates and maintenance as the project evolves.
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ use @Thar_desert_photography folder as folder for my previous project files of this same project but in html , css and javascript .
+
+ now i am converting that project to next js , react , typescript and organizing the structure to leverage Next.js features such as server-side rendering and static site generation.
+
+ so you have to make components and pages that align with Next.js conventions, ensuring optimal performance and scalability.
+  
+now i want that you create a about page from their to here .
+making proper components that reflect the design of the original page, utilizing reusable components for shared elements, and ensuring that all necessary data is imported from the constants folder. Additionally, implement any required styling to match the aesthetics of the previous project, and ensure that use only tailwind css for styles while adhering to best practices for accessibility and responsiveness.
+
+
+
+
+
+
+
+
+
+Login with admin credentials (email: admin@thardesertphotography.com, password: from .env)
+email :- admin@tdp.com
+password :- Admin@1234 
+
+
+
+
+
+
+
+
+ use Thar_desert_photography folder as folder for my previous project files of this same project but in html , css and javascript .
+
+ now i am converting that project to next js , react , typescript and organizing the structure 
+
+ so you have to make components and pages that align with Next.js conventions, ensuring optimal performance and scalability.
+  
+now i want that you create one by one  page from their to here .
+making proper components that reflect the design of the original page, utilizing reusable components for shared elements, and ensuring that all necessary data is imported from the constants folder. Additionally, implement any required styling to match the aesthetics of the previous project, and ensure that use only tailwind css for styles while adhering to best practices for accessibility and responsiveness.
+
+i am providing  page  code :-
+
+and their  section wise code 
+i will tell you when i
+
+i will provide you in many sectioon 
+you have accordign to you .
+
+you have to make a main page.tsx for that page .
+and wrie seprate file for all asection 
+and write their constant in a new file in constants folder 
+and so on and make reusable code .
+
+below is code 
+::----
+
+

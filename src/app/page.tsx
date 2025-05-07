@@ -1,55 +1,104 @@
-import ImageGallery from "@/components/ImageGallery";
-import Link from "next/link";
+'use client';
+
+import { homeInfo } from '@/constant/homeInfo';
+import { homeInfoHindi } from '@/constant/homeInfoHindi';
+import HeroWithHeader from '@/components/home/HeroWithHeader';
+import AboutSection from '@/components/home/AboutSection';
+import PopularDestinations from '@/components/home/PopularDestinations';
+import PackageSection from '@/components/home/PackageSection';
+import FacebookVideo from '@/components/home/FacebookVideo';
+import LazyGallerySection from '@/components/home/LazyGallerySection';
+import YouTubeSection from '@/components/home/YouTubeSection';
+import HomeCallToAction from '@/components/home/HomeCallToAction';
+// JoinTeamButton is now included in ClientBody
+import { useLanguage } from '@/context/LanguageContext';
 
 export default function Home() {
-  // Dummy images for gallery preview
-  const galleryImages = [
-    { src: "https://thardesertphotography.com/gallery/IMG_3763.webp", alt: "Thar Desert Safari" },
-    { src: "https://thardesertphotography.com/gallery/IMG_3883.webp", alt: "Camel Ride" },
-    { src: "https://thardesertphotography.com/gallery/IMG_5307-Edit.webp", alt: "Sunset in the Desert" },
-    { src: "https://thardesertphotography.com/gallery/IMG_4762.webp", alt: "Camp Night" },
-  ];
+  const { language } = useLanguage();
+
+  // Select content based on language
+  const content = language === 'en' ? homeInfo : homeInfoHindi;
+
   return (
-    <div className="">
-      {/* HERO SECTION */}
-      <section className="w-full min-h-[350px] flex flex-col justify-center items-center bg-cover bg-center rounded-xl mt-2 pb-4"
-        style={{ backgroundImage: 'url(https://thardesertphotography.com/images/hero.jpg)' }}>
-        <div className="bg-black/50 w-full h-full min-h-[350px] flex flex-col justify-center items-center rounded-xl">
-          <h1 className="text-3xl sm:text-4xl font-bold text-white mt-12 drop-shadow mb-4 text-center">Thar Desert Photography</h1>
-          <p className="text-white text-base sm:text-lg font-medium mb-6 text-center max-w-xs sm:max-w-md">Explore the magic of Rajasthan's desert through our lens. Camel safaris, camp nights, tours, and more!</p>
-          <Link href="/contact" className="bg-primary text-primary-foreground rounded px-6 py-2 font-semibold">Book Now</Link>
-        </div>
-      </section>
+    <main>
+      {/* Join Team Button is now included in ClientBody */}
 
-      {/* ABOUT PREVIEW */}
-      <section className="mt-8 text-center">
-        <h2 className="text-xl font-bold text-primary mb-1">About Us</h2>
-        <p className="text-sm text-muted-foreground max-w-md mx-auto mb-2">Paste a short about section here to introduce yourself, your story, and your mission to site visitors.</p>
-        <Link href="/about" className="text-primary font-semibold underline text-sm">Read more</Link>
-      </section>
+      {/* Hero Section with Header */}
+      <HeroWithHeader
+        title={content.hero.title}
+        subtitle={content.hero.subtitle}
+        backgroundImage={content.hero.backgroundImage}
+        primaryButtonText={content.hero.primaryButtonText}
+        primaryButtonLink={content.hero.primaryButtonLink}
+        secondaryButtonText={content.hero.secondaryButtonText}
+        secondaryButtonLink={content.hero.secondaryButtonLink}
+      />
 
-      {/* GALLERY PREVIEW */}
-      <section className="mt-8">
-        <h2 className="text-xl font-bold text-primary mb-3 text-center">Gallery</h2>
-        <ImageGallery images={galleryImages} />
-        <div className="text-center mt-2">
-          <Link href="/gallery" className="text-primary font-semibold underline text-sm">See the full gallery</Link>
-        </div>
-      </section>
+      {/* About Section */}
+      <AboutSection
+        subtitle={content.about.subtitle}
+        title={content.about.title}
+        content={content.about.content}
+        buttonText={content.about.buttonText}
+        buttonLink={content.about.buttonLink}
+      />
 
-      {/* PRODUCTS (MINI E-COMMERCE) PREVIEW */}
-      <section className="mt-8 text-center">
-        <h2 className="text-xl font-bold text-primary mb-1">Our Tours & Products</h2>
-        <p className="text-sm text-muted-foreground mb-2">Showcase your tour packages or products here. List 3-4 cards (see Products page for details).</p>
-        <Link href="/products" className="text-primary font-semibold underline text-sm">Browse packages</Link>
-      </section>
+      {/* Popular Destinations */}
+      <PopularDestinations
+        subtitle={content.popularDestinations.subtitle}
+        title={content.popularDestinations.title}
+        description={content.popularDestinations.description}
+        destinations={content.popularDestinations.destinations}
+        buttonText={content.popularDestinations.buttonText}
+        buttonLink={content.popularDestinations.buttonLink}
+      />
 
-      {/* CONTACT PREVIEW */}
-      <section className="mt-8 text-center">
-        <h2 className="text-xl font-bold text-primary mb-1">Ready for a Desert Adventure?</h2>
-        <p className="text-sm text-muted-foreground mb-2">Invite users to contact you for bookings or custom tours.</p>
-        <Link href="/contact" className="bg-primary text-primary-foreground rounded px-8 py-2 font-semibold">Contact Us</Link>
-      </section>
-    </div>
+      {/* Package Section */}
+      <PackageSection
+        subtitle={content.packages.subtitle}
+        title={content.packages.title}
+        packages={content.packages.packages}
+        viewAllButtonText={content.packages.viewAllButtonText}
+        viewAllButtonLink={content.packages.viewAllButtonLink}
+      />
+
+      {/* Facebook Video Section */}
+      <FacebookVideo videoUrl={content.facebookVideo.videoUrl} />
+
+      {/* Main Gallery Section */}
+      <LazyGallerySection
+        subtitle={content.gallery.subtitle}
+        title={content.gallery.title}
+        description={content.gallery.description}
+        images={content.gallery.images}
+        buttonText={content.gallery.buttonText}
+        buttonLink={content.gallery.buttonLink}
+      />
+
+      {/* Photographer Gallery Section */}
+      <LazyGallerySection
+        subtitle={content.photographerGallery.subtitle}
+        title={content.photographerGallery.title}
+        description={content.photographerGallery.description}
+        images={content.photographerGallery.images}
+        buttonText={content.photographerGallery.buttonText}
+        buttonLink={content.photographerGallery.buttonLink}
+      />
+
+      {/* YouTube Section */}
+      {/* <YouTubeSection
+        title={content.youtubeSection.title}
+        embedId={content.youtubeSection.embedId}
+      /> */}
+
+      {/* Call to Action */}
+      <HomeCallToAction
+        subtitle={content.callToAction.subtitle}
+        title={content.callToAction.title}
+        description={content.callToAction.description}
+        buttonText={content.callToAction.buttonText}
+        phoneNumber={content.callToAction.phoneNumber}
+      />
+    </main>
   );
 }

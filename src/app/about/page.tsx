@@ -1,27 +1,39 @@
-export default function About() {
+'use client';
+
+import { aboutInfo } from '@/constant/aboutInfo';
+import { aboutInfoHindi } from '@/constant/aboutInfoHindi';
+import HeroWithHeader from '@/components/common/HeroWithHeader';
+import AboutSection from '@/components/about/AboutSection';
+import AboutCallToAction from '@/components/about/AboutCallToAction';
+// JoinTeamButton is now included in ClientBody
+import { useLanguage } from '@/context/LanguageContext';
+
+export default function AboutPage() {
+  const { language } = useLanguage();
+
+  // Select content based on language
+  const content = language === 'en' ? aboutInfo : aboutInfoHindi;
+
   return (
-    <section className="max-w-xl mx-auto text-center">
-      <h1 className="text-2xl font-bold text-primary mb-3">About Thar Desert Photography</h1>
-      <img
-        src="https://thardesertphotography.com/images/team-1.jpg"
-        alt="Photographer Profile"
-        className="mx-auto rounded-full h-32 w-32 object-cover mb-4 border"
+    <main>
+      {/* Join Team Button is now included in ClientBody */}
+
+      {/* Hero Section with Header */}
+      <HeroWithHeader
+        title={content.title}
+        subtitle={content.subtitle}
+        backgroundImage={content.heroImage}
+        primaryButtonText={content.contactButtonText}
+        primaryButtonLink={content.contactButtonLink}
+        secondaryButtonText={content.bookButtonText}
+        secondaryButtonLink={content.bookButtonLink}
       />
-      <div className="mb-4 text-base text-muted-foreground">
-        {/* Paste your biography or studio story here */}
-        We are desert lovers, passionate about capturing the stunning beauty of Rajasthan. Paste your history, credentials, or story here.
-      </div>
-      <div className="mb-2">
-        <strong>Our Mission: </strong>
-        <span>To help travelers and adventurers experience and immortalize the Thar Desert through powerful storytelling and beautiful photography.</span>
-      </div>
-      <div className="mb-8">
-        <strong>Our Vision: </strong>
-        <span>To be Rajasthan's leading desert photography and tour provider, delighting guests from around the world.</span>
-      </div>
-      <div>
-        {/* Add awards, testimonials, or team here if desired */}
-      </div>
-    </section>
+
+      {/* About Section */}
+      <AboutSection />
+
+      {/* Call to Action */}
+      <AboutCallToAction />
+    </main>
   );
 }

@@ -1,61 +1,52 @@
-"use client";
-import { useState } from "react";
-import Input from "@/components/ui/Input";
-import TextArea from "@/components/ui/TextArea";
-import Button from "@/components/ui/Button";
+'use client';
 
-export default function Contact() {
-  const [form, setForm] = useState({ name: "", phone: "", email: "", message: "" });
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setForm(f => ({ ...f, [e.target.name]: e.target.value }));
-  };
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // You can replace this with email sending/form backend
-    alert("Thank you! We'll contact you soon.");
-    setForm({ name: "", phone: "", email: "", message: "" });
-  };
+import HeroWithHeader from '@/components/common/HeroWithHeader';
+import ContactForm from '@/components/contact/ContactForm';
+import ContactInfo from '@/components/contact/ContactInfo';
+import SocialProfiles from '@/components/contact/SocialProfiles';
+import CallToAction from '@/components/contact/CallToAction';
+import WhatsAppFloat from '@/components/contact/WhatsAppFloat';
+import { contactInfo } from '@/constant/contactInfo';
+import { contactInfoHindi } from '@/constant/contactInfoHindi';
+import { useLanguage } from '@/context/LanguageContext';
+
+export default function ContactPage() {
+  const { language } = useLanguage();
+
+  // Select content based on language
+  const content = language === 'en' ? contactInfo : contactInfoHindi;
+
   return (
-    <section className="max-w-md mx-auto mt-4 mb-10">
-      <h1 className="text-2xl font-bold text-primary mb-3 text-center">Contact Us</h1>
-      <form onSubmit={handleSubmit} className="bg-card border border-border rounded-lg p-4 flex flex-col gap-3 shadow">
-        <Input
-          type="text"
-          name="name"
-          required
-          placeholder="Your Name"
-          value={form.name}
-          onChange={handleChange}
-        />
-        <Input
-          type="tel"
-          name="phone"
-          required
-          placeholder="Phone Number"
-          value={form.phone}
-          onChange={handleChange}
-        />
-        <Input
-          type="email"
-          name="email"
-          required
-          placeholder="Email Address"
-          value={form.email}
-          onChange={handleChange}
-        />
-        <TextArea
-          name="message"
-          placeholder="How can we help you?"
-          value={form.message}
-          onChange={handleChange}
-          rows={4}
-          className="resize-none"
-        />
-        <Button type="submit">Send Message</Button>
-      </form>
-      <div className="mt-6 text-center text-sm text-muted-foreground">
-        Or email: <a href="mailto:info@thardesertphotography.com" className="text-primary underline">info@thardesertphotography.com</a>
-      </div>
-    </section>
+    <main>
+      {/* WhatsApp Float Button */}
+      <WhatsAppFloat />
+
+      {/* Hero Section with Header */}
+      <HeroWithHeader
+        title={language === 'en' ? 'Contact Me' : 'मुझसे संपर्क करें'}
+        subtitle={
+          language === 'en'
+            ? "Guiding You to Nature's Secrets and Avian Delights of the incredible Rajasthan."
+            : 'अद्भुत राजस्थान के प्रकृति के रहस्यों और पक्षियों के आनंद तक आपका मार्गदर्शन करना।'
+        }
+        backgroundImage="/assets/Images/contact/banner.JPG"
+        primaryButtonText={language === 'en' ? 'About Me' : 'मेरे बारे में'}
+        primaryButtonLink="/about"
+        secondaryButtonText={language === 'en' ? 'Book Now' : 'अभी बुक करें'}
+        secondaryButtonLink={content.inquiryFormLink}
+      />
+
+      {/* Contact Form */}
+      <ContactForm />
+
+      {/* Contact Information */}
+      <ContactInfo />
+
+      {/* Social Media Profiles */}
+      <SocialProfiles />
+
+      {/* Call to Action */}
+      <CallToAction />
+    </main>
   );
 }
